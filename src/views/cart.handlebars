@@ -1,0 +1,27 @@
+<header class="pt-2">
+    <h1 class="text-white text-xl">Carrito ID: <span class="font-bold">{{cartId}}</span></h1>
+</header>
+
+<main class="w-screen">
+  <section class="text-white mx-auto w-3/4">
+    <h2 class="text-2xl py-4">Productos en tu Carrito</h2>
+    {{#if products.length}}
+      <ul class="flex flex-col gap-2">
+        {{#each products}}
+          <li class="rounded-lg flex p-2 min-h-64 items-center justify-between bg-gradient-to-b from-indigo-900 to-indigo-700">
+            {{#each this.thumbnail}}
+              <img class="absolute rounded-lg" src="{{modifyImageUrl this '240' '240'}}" alt="{{this.title}}">
+            {{/each}}
+            <p class="font-bold pl-64 w-4/5">{{this.title}}</pclass> 
+            <p class="w-fit">${{formatNumber this.price 2}}</p>
+            <p class="w-1/10">x</p>
+            <p class="w-fit">{{this.quantity}}u</p>  
+            <p class="w-fit">${{formatNumber (multiply this.price this.quantity) 2}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>Tu carrito está vacío.</p>
+    {{/if}}
+  </section>
+</main>

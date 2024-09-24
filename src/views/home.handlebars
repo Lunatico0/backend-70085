@@ -1,0 +1,289 @@
+<header class="flex min-w-full mx-auto min-h-36 py-4 bg-gradient-to-b from-indigo-500">
+  <nav class="nav w-full mx-auto">
+    <ul class="navMenu flex mx-auto">
+      <div>
+        <li class="navItem">
+          <a href="/" class="my-8 text-white text-5xl font-extrabold navLink">
+            <h1 class="">Productos</h1>
+          </a>
+        </li>
+      </div>
+      <div class="flex">
+        {{#each categories}}
+        <li class="navItem">
+          <a href="?category={{this.categoriaId}}"
+            class="text-lg text-white navLink{{#ifCond ../currentCategory '==' this.categoriaId}} active text-xl font-bold{{/ifCond}}">
+            {{this.categoriaNombre}}
+          </a>
+
+          {{#if this.subcategorias}}
+          <ul class="subMenu">
+            {{#each this.subcategorias}}
+            <li class="subNavItem">
+              <a href="?category={{../categoriaId}}&subcategory={{this.subcategoriaId}}"
+                class="text-lg text-white subNavLink{{#ifCond ../../currentSubCategory '==' this.subcategoriaId}} active text-xl font-bold{{/ifCond}}">
+                {{this.subcategoriaNombre}}
+              </a>
+            </li>
+            {{/each}}
+          </ul>
+          {{/if}}
+        </li>
+        {{/each}}
+      </div>
+    </ul>
+  </nav>
+</header>
+
+<div
+  class="flex md:flex-row flex-col text-xs md:text-base justify-between items-center max-w-[80rem] w-3/4 px-6 pt-2  mb-4">
+  <form id="limitForm" action="?" class="flex gap-2 items-center">
+    <label for="cant" class="text-white">Mostrando</label>
+    <select name="limit" id="cant" class="bg-slate-300 border border-slate-400 rounded px-2 py-1">
+      <option value="5" {{#ifCond limit '==' 5}}selected{{/ifCond}}>5</option>
+      <option value="10" {{#ifCond limit '==' 10}}selected{{/ifCond}}>10</option>
+      <option value="15" {{#ifCond limit '==' 15}}selected{{/ifCond}}>15</option>
+      <option value="30" {{#ifCond limit '==' 30}}selected{{/ifCond}}>30</option>
+      <option value="50" {{#ifCond limit '==' 50}}selected{{/ifCond}}>50</option>
+      <option value="75" {{#ifCond limit '==' 75}}selected{{/ifCond}}>75</option>
+      <option value="100" {{#ifCond limit '==' 100}}selected{{/ifCond}}>100</option>
+      <option value="200" {{#ifCond limit '==' 200}}selected{{/ifCond}}>200</option>
+    </select>
+    <p class="text-white">productos</p>
+  </form>
+
+  <form id="sortForm" action="?" class="flex gap-2 items-center">
+    <label for="by" class="text-white">Ordenar por</label>
+    <select name="sort" id="by" class="bg-slate-300 border border-slate-400 rounded px-2 py-1">
+      <option value="defa" {{#if (eq sort 'defa' )}}selected{{/if}}>Relevancia</option>
+      <option value="price_asc" {{#if (eq sort 'price_asc' )}}selected{{/if}}>Menor precio</option>
+      <option value="price_desc" {{#if (eq sort 'price_desc' )}}selected{{/if}}>Mayor precio</option>
+      <option value="alpha_asc" {{#if (eq sort 'alpha_asc' )}}selected{{/if}}>Alfabético ascendente</option>
+      <option value="alpha_desc" {{#if (eq sort 'alpha_desc' )}}selected{{/if}}>Alfabético descendente</option>
+    </select>
+</div>
+
+<div class="flex text-xs md:text-sm justify-center w-3/4 items-center gap-2 flex-wrap">
+  {{#each payload}}
+  <div class="card flex flex-col justify-between bg-slate-600 rounded min-h-24 w-60 md:min-h-32 h-[380px] md:h-[400px] p-1">
+    <div class="flex flex-col object-fill">
+      <img src="{{modifyImageUrl this.thumbnails.[0] '240' '240'}}" class="w-full h-auto rounded-sm object-cover">
+    </div>
+    <div class="text-white flex flex-col gap-2">
+      <h2 class="text-white text-lg md:text-xl leading-6 itemDescripcion"> {{this.title}} </h2>
+      <h3 class="text-white text-xs md:text-sm leading-4">
+        {{#each description}}
+        {{#ifCond this.label '==' "MEDIDAS"}}
+        {{this.label}}: {{this.value}}
+        {{/ifCond}}
+        {{/each}}
+      </h3>
+      <p class="text-white"> ${{formatNumber price 2}} </p>
+    </div>
+    <a class="bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black mt-2 cursor-pointer flex justify-center rounded text-white addProduct"
+      id="{{this._id}}">Agregar</a>
+  </div>
+  {{/each}}
+</div>
+
+<div class="flex flex-row gap-4 pt-4 botones pagination">
+  <a id="prevPageLink" class="
+  {{#if hasPrevPage}}
+  bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded
+  {{else}}
+  bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded cursor-not-allowed opacity-50
+  {{/if}}"
+    href="{{#if hasPrevPage}}/products?page={{prevPage}}&limit={{limit}}{{#if sort}}&sort={{sort}}{{/if}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}{{#if currentSubCategory}}&subcategory={{currentSubCategory}}{{/if}}{{/if}}">
+    ◀️
+  </a>
+
+  {{#ifCond lastPage '>' 5}}
+  {{#ifCond page '>=' 4}}
+  <a id="prevEnumPageLink"
+    href="/products?page=1&limit={{limit}}{{#if sort}}&sort={{sort}}{{/if}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}{{#if currentSubCategory}}&subcategory={{currentSubCategory}}{{/if}}"
+    class="bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded">
+    1
+  </a>
+  {{#ifCond page '>' 4}}
+  <p class="text-white px-2 pt-4">...</p>
+  {{/ifCond}}
+  {{/ifCond}}
+  {{/ifCond}}
+
+  {{#each totalPages}}
+  <a href="/products?page={{this}}&limit={{../limit}}{{#if ../sort}}&sort={{../sort}}{{/if}}{{#if ../currentCategory}}&category={{../currentCategory}}{{/if}}{{#if ../currentSubCategory}}&subcategory={{../currentSubCategory}}{{/if}}"
+    class=" bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded
+    {{#if (eq this ../page)}}active{{/if}}">{{this}}</a>
+  {{/each}}
+
+  {{#ifCond lastPage '>' 5}}
+    {{#ifCond page '<' (subtract lastPage 2)}} {{!-- <p>{{gt lastPage 5}}</p> prueba de booleanos
+    <p>{{lt page (subtract lastPage 3)}}</p> --}}
+      {{#ifCond page '<' (subtract lastPage 3)}} 
+        <p class="text-white px-2 pt-4">...</p>
+      {{/ifCond}}
+        <a id="nextPageLink"
+          href="/products?page={{lastPage}}&limit={{limit}}{{#if sort}}&sort={{sort}}{{/if}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}{{#if currentSubCategory}}&subcategory={{currentSubCategory}}{{/if}}"
+          class="bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded">
+          {{lastPage}}
+        </a>
+    {{/ifCond}}
+  {{/ifCond}}
+
+  <a id="nextEnumPageLink" class="{{#if hasNextPage}} bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded{{else}} buttons bg-slate-400/90 border-slate-400 border hover:bg-slate-500 active:bg-slate-300 active:text-black text-white mt-2 px-2 py-1 rounded cursor-not-allowed opacity-50{{/if}}"
+  href="{{#if hasNextPage}}/products?page={{nextPage}}&limit={{limit}}{{#if sort}}&sort={{sort}}{{/if}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}{{#if currentSubCategory}}&subcategory={{currentSubCategory}}{{/if}}{{/if}}">
+    ▶️
+  </a>
+</div>
+
+<script>
+  document.getElementById('cant').addEventListener('change', function () {
+    let url = new URL(window.location.href);
+    let cantValue = this.value;
+    if (cantValue) {
+      url.searchParams.set('limit', cantValue);
+    }
+    url.searchParams.set('page', 1);
+    window.location.href = url.toString();
+  });
+
+  document.getElementById('by').addEventListener('change', function () {
+    let url = new URL(window.location.href);
+    let sortValue = this.value;
+    if (sortValue) {
+      url.searchParams.set('sort', sortValue);
+    }
+    url.searchParams.set('page', 1);
+    window.location.href = url.toString();
+  });
+
+  document.getElementById('prevPageLink').addEventListener('click', function (event) {
+    if (this.classList.contains('cursor-not-allowed')) {
+      event.preventDefault();
+    }
+  });
+
+  document.getElementById('nextPageLink').addEventListener('click', function (event) {
+    if (this.classList.contains('cursor-not-allowed')) {
+      event.preventDefault();
+    }
+  });
+
+  let data;
+
+  const main = async () => {
+    let cart = await fetch('http://localhost:8080/api/carts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    data = await cart.json();
+  }
+
+  main();
+
+  const addButtons = Array.from(document.getElementsByClassName('addProduct'));
+
+  addButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const productId = button.id;
+      const url = `http://localhost:8080/api/carts/${data.newCart._id}/products/${productId}`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ productId })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Producto agregado al carrito:', result);
+        } else {
+          console.error('Error al agregar producto al carrito:', response.statusText);
+        }
+      } catch (err) {
+        console.error('Error de red:', err);
+      }
+    });
+  });
+</script>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .navMenu {
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .navItem {
+    list-style: none;
+    position: relative;
+  }
+
+  .navItem:hover .subMenu {
+    display: block;
+  }
+
+  .navLink {
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 1rem;
+    display: block;
+  }
+
+  .subMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: slategrey;
+    @include box-shadow($box-shadow-default);
+    border-radius: 0.5rem;
+    width: max-content;
+  }
+
+  .subNavItem {
+    list-style: none;
+  }
+
+  .subNavLink {
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+
+  .subNavItem:hover {
+    background: rgb(97, 111, 126);
+    border-radius: .5rem;
+  }
+
+  .itemDescripcion {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
+  .buttons {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .pagination a.active {
+    background-color: #cbd5e1;
+    color: black;
+    border: 1px solid #94a3b8;
+  }
+</style>

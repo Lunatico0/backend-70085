@@ -1,0 +1,36 @@
+<header class="bg-gray-800 text-white p-4 w-full">
+  <nav class="container w-3/4 mx-auto flex justify-between items-center">
+    <a href="/" class="text-lg font-semibold">Wolcome</a>
+    <form action="/api/sessions/logout" method="post">
+      <button class="bg-red-600 px-4 py-2 rounded hover:bg-red-700" type="submit">Logout</button>
+    </form>
+  </nav>
+</header>
+
+<main class="container mx-auto mt-8 p-4 bg-white rounded shadow-md">
+  <h1 class="text-2xl font-bold mb-4">User Profile</h1>
+  <div class="mb-4">
+    <label class="block text-gray-700 font-bold mb-2" for="name">
+      Name:
+    </label>
+    <p id="name" class="text-gray-900">{{user.name}} {{user.lastName}}</p>
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 font-bold mb-2" for="email">
+      Email:
+    </label>
+    <p id="email" class="text-gray-900">{{user.email}}</p>
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 font-bold mb-2" for="age">
+      Age:
+    </label>
+    <p id="age" class="text-gray-900">{{user.age}}</p>
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 font-bold mb-2" for="role">
+      Role:
+    </label>
+    <p id="role" class="text-gray-900">{{user.role}}</p>
+  </div>
+</main>

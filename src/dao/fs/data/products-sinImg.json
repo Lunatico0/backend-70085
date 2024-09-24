@@ -1,0 +1,150 @@
+[
+  {
+    "id": 4,
+    "title": "Yerba",
+    "description": "Libre de gluten Rosamonte",
+    "price": 3900,
+    "img": "whithout image",
+    "code": "3074",
+    "stock": "3870",
+    "category": "almacen",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Pan",
+    "description": "Libre de gluten",
+    "price": 2900,
+    "img": "whithout image",
+    "code": "33074",
+    "stock": "3870",
+    "category": "almacen",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 8,
+    "title": "Pure de tomate",
+    "description": "La campagnola x500g",
+    "price": 900,
+    "img": "whithout image",
+    "code": "9293",
+    "stock": "1763",
+    "category": "almacen",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 9,
+    "title": "Aceite",
+    "description": "Oiva Extravirgen",
+    "price": 9500,
+    "img": "whithout image",
+    "code": "19293",
+    "stock": "163",
+    "category": "almacen",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 10,
+    "title": "Caramelos",
+    "description": "Alka cherry menthol",
+    "price": 2500,
+    "img": "whithout image",
+    "code": "493",
+    "stock": "5163",
+    "category": "kiosco",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 11,
+    "title": "Arbejas",
+    "description": "Enlatadas",
+    "price": 231.23,
+    "code": "214b",
+    "stock": "21",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": "www.w3s.com"
+  },
+  {
+    "id": 12,
+    "title": "Vaso",
+    "description": "250ml",
+    "price": 600,
+    "code": "v250",
+    "stock": 10,
+    "category": "Bazar",
+    "status": true,
+    "thumbnails": "noImg"
+  },
+  {
+    "id": 14,
+    "title": "Agua",
+    "description": "Villavicencio 250ml",
+    "price": 219.9,
+    "code": "381762",
+    "stock": 13,
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": "www.w3s.com"
+  },
+  {
+    "id": 15,
+    "title": "Termo",
+    "description": "Capacidad 1L, Marca Stanley",
+    "price": 37000,
+    "code": "t750f",
+    "stock": 33,
+    "category": "Bazar",
+    "status": true,
+    "thumbnails": "www.w3s.com"
+  },
+  {
+    "id": 16,
+    "title": "Telefono",
+    "description": "Samsung s-10",
+    "price": 234735.7,
+    "code": "sm-g910",
+    "stock": 1,
+    "category": "SmartPhones",
+    "status": true,
+    "thumbnails": "noImg"
+  },
+  {
+    "id": 17,
+    "title": "Mouse Redragon",
+    "description": "Dragonstorm Pro",
+    "price": 50794.2,
+    "code": "m808w",
+    "stock": 1,
+    "category": "Perifericos de pc",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 18,
+    "title": "Teclado Xingmeng",
+    "description": "68% mecanico inalambrico",
+    "price": 68950,
+    "code": "gb/t14081",
+    "stock": 1,
+    "category": "Perifericos de pc",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 19,
+    "title": "Pepas",
+    "description": "Clasicas",
+    "price": 231.5,
+    "code": "p302-s",
+    "stock": 2,
+    "category": "Comestibles",
+    "status": true,
+    "thumbnails": []
+  }
+]

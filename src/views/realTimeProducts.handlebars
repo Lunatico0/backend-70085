@@ -1,0 +1,97 @@
+<h2 class="my-8 text-white text-4xl font-bold">Aca se Muestran los productos en tiempo real</h2>
+
+<div id="limitContainer">
+  {{!-- Se renderiza el form en tiempo real --}}
+</div>
+
+<div class="flex gap-8 max-w-full w-5/6">
+  <div class="flex justify-center items-center gap-2 flex-wrap" id="productsContainer">
+    {{!-- Se renderizan los productos en tiempo real --}}
+  </div>
+
+  <div class="flex flex-col justify-start items-start gap-2 px-2 min-w-80" id="formContainer">
+    <h4 class="text-white text-2xl text-center fixed">Agregar un producto</h4>
+    <h5 class="text-gray-500 text-xs text-start fixed mt-10">(*) Campos obligatorios</h5>
+    {{!-- Se renderiza el formulario en tiempo real --}}
+  </div>
+</div>
+
+<div id="pagination">
+  {{!-- Se renderizan los botones en tiempo real --}}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/js/main.js"></script>
+
+<style>
+  .form {
+    display: grid;
+    gap: .5rem;
+    align-items: center;
+    padding: 1.5rem 0;
+  }
+
+  .input-group {
+    position: relative;
+    width: 100%;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(75, 85, 99, 0.5);
+    /* Slate-600 */
+    background-color: rgba(209, 213, 219, 0.7);
+    /* Gray-300 */
+    border-radius: 0.5rem;
+    outline: none;
+    color: #111827;
+    /* Gray-900 */
+    font-size: 1rem;
+  }
+
+  .input-group span {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    pointer-events: none;
+    font-size: .7rem;
+    color: rgba(31, 41, 55, 0.5);
+    transition: transform 0.3s, padding 0.3s, background-color 0.3s;
+  }
+
+  .input-group input:focus~span,
+  .input-group input:not(:placeholder-shown)~span,
+  .input-group textarea:focus~span,
+  .input-group textarea:not(:placeholder-shown)~span {
+    transform: translate(0, -1.05rem);
+    padding: 0 7px;
+    color: rgba(31, 41, 55, 0.7);
+    /* Gray-800 */
+    background-color: rgba(229, 231, 235, 0.5);
+    /* Gray-200 */
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Ocultar las flechas de los campos de tipo number en Chrome, Safari y Edge */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Ocultar las flechas de los campos de tipo number en Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  .itemDescripcion {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+</style>
