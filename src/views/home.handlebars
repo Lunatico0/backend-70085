@@ -2,7 +2,7 @@
   <section class="flex justify-end items-center mx-auto w-3/4">
     <div class="flex w-60 justify-between items-center space-x-4">
       <a href="/api/sessions/cart"
-        class="flex items-center text-white font-bold no-underline hover:no-underline">Carrito</a>
+        class="flex items-center text-white font-bold no-underline hover:no-underline" id="cartLink"></a>
       <a href="/api/sessions/current" class="flex items-center text-white font-bold no-underline hover:no-underline"
         id="logProfile">Login</a>
     </div>
@@ -204,14 +204,14 @@
 
   const addButtons = Array.from(document.getElementsByClassName('addProduct'));
   const logProfile = document.getElementById("logProfile");
+  const cartLink = document.getElementById("cartLink");
 
   const userLoged = async () => {
     try {
       if (user) {
         logProfile.innerText = `${user.user.name} ${user.user.lastName}`;
-        console.log(user.user)
+        cartLink.innerText = `Carrito (${user.cart.products.length})`;
       }
-
     } catch (error) {
       console.log(error.message);
     }

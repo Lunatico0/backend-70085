@@ -14,11 +14,13 @@ const cookieExtractor = (req) => {
   return token;
 };
 
+const JWTOpctions = {
+  jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+  secretOrKey: jwtSecret
+};
+
 const initializePassport = () => {
-  passport.use('current', new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-    secretOrKey: jwtSecret
-  }, async (jwtPayload, done) => {
+  passport.use('current', new JwtStrategy(JWTOpctions, async (jwtPayload, done) => {
     try {
       const user = await UserModel.findOne({ email: jwtPayload.email });
       if (!user) {

@@ -80,17 +80,22 @@ router.post('/logout', async (req, res) => {
 });
 
 // Current
-router.get('/current', passport.authenticate('current', { session: false }), async (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login'); // Redirige a /login si no hay usuario autenticado
-  }
-  try {
-    const cart = await manager.getCartById(req.user.cart); // Obtener el carrito del usuario
-    res.render('profile', { user: req.user, cart: cart }); // Renderizar la vista del perfil con la info del usuario
-  } catch (error) {
-    res.status(500).send("Error al obtener el perfil");
-  }
-})
+router.get('/current', (req, res, next) => {
+  passport.authenticate('current', { session: false }, async (err, user) => {
+    if (err || !user) {
+      return res.redirect('/login'); // Redirigir a login si no hay usuario
+    }
+
+    // Si hay usuario, renderizar el perfil
+    req.user = user;
+    try {
+      const cart = await manager.getCartById(req.user.cart);
+      res.render('profile', { user: req.user, cart: cart });
+    } catch (error) {
+      res.status(500).send("Error al obtener el perfil");
+    }
+  })(req, res, next);
+});
 
 // Admin
 router.get('/admin', passport.authenticate('current', { session: false }), async (req, res) => {
@@ -100,6 +105,7 @@ router.get('/admin', passport.authenticate('current', { session: false }), async
   res.render('realTimeProducts', { user: req.user });
 })
 
+// Home products
 router.get('/', (req, res, next) => {
   passport.authenticate('current', { session: false }, async (err, user) => {
     if (err) {
@@ -109,11 +115,12 @@ router.get('/', (req, res, next) => {
       return res.status(100).json({ message: 'Unauthenticated' });
     }
     req.user = user;
-    const cart = await manager.getCartById(req.user.cart)
-    return res.send( { user: req.user, cart: cart });
+    const cart = await manager.getCartById(req.user.cart);
+    return res.send({ user: req.user, cart: cart });
   })(req, res, next);
 });
 
+// Carrito
 router.get('/cart', passport.authenticate('current', { session: false }), async (req, res) => {
   const cart = await manager.getCartById(req.user.cart);
   res.render('cart', { cartId: req.user.cart, products: cart.products });
