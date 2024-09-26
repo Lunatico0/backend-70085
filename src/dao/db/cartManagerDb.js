@@ -47,12 +47,18 @@ class CartManager {
 
     try {
       const cart = await this.getCartById(idCart);
+      if (!cart) {
+        throw new Error('Cart not found');
+      }
+
       const productFound = cart.products.find(p => p.product.equals(idProduct));
 
       if (productFound) {
         productFound.quantity += quantity;
+        console.log(`Updated product quantity: ${productFound.quantity}`);
       } else {
         cart.products.push({ product: idProduct, quantity });
+        console.log(`Added new product to cart: ${idProduct}`);
       }
 
       await cart.save();
@@ -62,6 +68,7 @@ class CartManager {
       throw new Error('Error adding product to cart');
     }
   };
+
 
   async deleteProductFromCart(idCart, idProduct) {
     if (!mongoose.Types.ObjectId.isValid(idCart) || !mongoose.Types.ObjectId.isValid(idProduct)) {

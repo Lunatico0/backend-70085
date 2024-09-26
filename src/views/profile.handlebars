@@ -1,6 +1,11 @@
 <header class="bg-gray-800 text-white p-4 w-full">
   <nav class="container w-3/4 mx-auto flex justify-between items-center">
-    <a href="/" class="text-lg font-semibold">Wolcome</a>
+    <div>
+      <a href="/" class="text-lg font-semibold">Shop</a>
+    </div>
+    <div>
+      <a href="/api/sessions/cart" class="text-lg font-semibold">Cart ({{ cart.products.length }})</a>
+    </div>
     <form action="/api/sessions/logout" method="post">
       <button class="bg-red-600 px-4 py-2 rounded hover:bg-red-700" type="submit">Logout</button>
     </form>

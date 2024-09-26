@@ -1,32 +1,47 @@
 import passport from 'passport';
-import jwt from 'passport-jwt';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { config } from "dotenv";
-
+import UserModel from '../dao/models/user.model.js';
 config();
 
 const jwtSecret = process.env.JWT_SECRET;
-const JWTStrategy = jwt.Strategy;
-const ExtractJWT = jwt.ExtractJwt;
-
-const initializePassport = (users) => {
-  passport.use('current', new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-    secretOrKey: jwtSecret
-  }, async (jwt_payload, done) => {
-    try {
-      return done(null, jwt_payload);
-    } catch (error) {
-      return done(error);
-    }
-  }))
-};
 
 const cookieExtractor = (req) => {
   let token = null;
-  if( req && req.cookies ) {
+  if (req && req.cookies) {
     token = req.cookies['token'];
   }
-  return token
-}
+  return token;
+};
+
+const initializePassport = () => {
+  passport.use('current', new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+    secretOrKey: jwtSecret
+  }, async (jwtPayload, done) => {
+    try {
+      const user = await UserModel.findOne({ email: jwtPayload.email });
+      if (!user) {
+        return done(null, false);
+      }
+      return done(null, user);
+    } catch (error) {
+      return done(error, false);
+    }
+  }));
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await UserModel.findById(id);
+      done(null, user);
+    } catch (error) {
+      done(error, null);
+    }
+  });
+};
 
 export default initializePassport;

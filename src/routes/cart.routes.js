@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from "passport";
 import CartManager from "../dao/db/cartManagerDb.js";
 
 const router = Router();
@@ -40,11 +41,45 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/:cid/products/:pid", async (req, res) => {
-  const { cid, pid } = req.params;
+router.post("/:pid", passport.authenticate('current', { session: false }), async (req, res) => {
+  if (!req.user) {
+    return res.status(401).redirect('/login');
+  }
+
+  const { pid } = req.params;
   const quantity = req.body.quantity || 1;
+  let cartId = req.user.cart;
+
   try {
+    if (!cartId) {
+      const newCart = await manager.addCart();
+      req.user.cart = newCart._id;
+      await req.user.save();
+      cartId = newCart._id;
+    }
+
+    const result = await manager.addProductToCart(cartId, pid, quantity);
+    res.status(200).json({ message: "Producto agregado al carrito exitosamente", result });
+  } catch (error) {
+    res.status(500).json({ status: "error", error: error.message });
+  }
+});
+
+router.post('/:cid/products/:pid', passport.authenticate('current', { session: false }), async (req, res) => {
+  try {
+    const cid = req.params.cid || req.user.cart;
+    const { pid } = req.params;
+    const quantity = req.body.quantity || 1;
+
+    if (!cid) {
+      return res.status(400).json({ message: 'No se pudo encontrar el carrito' });
+    }
+
+    // console.log(cid)
+    // console.log(pid)
+
     const result = await manager.addProductToCart(cid, pid, quantity);
+
     if (result) {
       res.status(200).json({ message: "Producto agregado al carrito exitosamente", result });
     } else {
@@ -55,23 +90,8 @@ router.post("/:cid/products/:pid", async (req, res) => {
   }
 });
 
-router.put("/:cid/products/:pid", async (req, res) => {
-  const { cid, pid } = req.params;
-  const quantity = req.body.quantity || 1;
-  try {
-    const result = await manager.addProductToCart(cid, pid, quantity);
-    if (result) {
-      res.status(200).json({ message: "Producto agregado al carrito exitosamente", result });
-    } else {
-      res.status(400).json({ message: "Error al agregar producto al carrito" });
-    }
-  } catch (error) {
-    res.status(500).json({ status: "error", error: error.message });
-  }
-});
-
-router.put("/:cid", async (req, res) => { //Actualizar y mantener los productos existentes
-  const { cid } = req.params;             //Al final de este archivo hay un comentario sobre este metodo
+router.put("/:cid", async (req, res) => {
+  const { cid } = req.params;
   const { products } = req.body;
 
   if (!Array.isArray(products)) {
@@ -84,10 +104,8 @@ router.put("/:cid", async (req, res) => { //Actualizar y mantener los productos 
       return res.status(404).json({ message: "Carrito no encontrado" });
     }
 
-    // Crear un mapa de los productos entrantes
     const productMap = new Map(products.map(product => [product.productId, product.quantity || 1]));
 
-    // Actualizar las cantidades de los productos existentes en el carrito
     cart.products.forEach(cartProduct => {
       if (productMap.has(cartProduct.product.toString())) {
         cartProduct.quantity = productMap.get(cartProduct.product.toString());
@@ -95,7 +113,6 @@ router.put("/:cid", async (req, res) => { //Actualizar y mantener los productos 
       }
     });
 
-    // Añadir nuevos productos que no estaban en el carrito
     productMap.forEach((quantity, productId) => {
       cart.products.push({ product: productId, quantity });
     });
@@ -137,35 +154,3 @@ router.delete("/:cid/products/:pid", async (req, res) => {
 });
 
 export default router;
-
-/**     
- * Este metodo reemplaza completamente los productos de dichoo carrito con los nuevos
- * 
- * router.put("/:cid", async (req, res) => {
-  const { cid } = req.params;
-  const { products } = req.body;
-
-  if (!Array.isArray(products)) {
-    return res.status(400).json({ message: "El formato de productos es inválido, debe ser un array" });
-  }
-
-  try {
-    const cart = await manager.getCartById(cid);
-    if (!cart) {
-      return res.status(404).json({ message: "Carrito no encontrado" });
-    }
-
-    // Reemplaza todos los productos existentes con el nuevo arreglo
-    cart.products = products.map(product => ({
-      product: product.productId,
-      quantity: product.quantity || 1,
-    }));
-
-    await cart.save();
-
-    res.status(200).json({ message: "Carrito actualizado exitosamente", cart });
-  } catch (error) {
-    res.status(500).json({ status: "error", message: error.message });
-  }
-});
- */

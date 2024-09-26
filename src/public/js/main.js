@@ -73,7 +73,6 @@ function renderProductos(products) {
 
     productsContainer.appendChild(card);
 
-    // Agregamos un listener para eliminar el producto
     card.querySelector('button').addEventListener('click', () => {
       console.log('Deleting product with id:', product.id);
       deleteProduct(product.id);

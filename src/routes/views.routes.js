@@ -80,7 +80,6 @@ router.get('/carts/:cid', async (req, res) => {
   const { cid } = req.params;
 
   try {
-    // Obtén el carrito por su ID
     const cart = await cartManager.getCartById(cid);
 
     if (!cart) {
@@ -90,7 +89,6 @@ router.get('/carts/:cid', async (req, res) => {
       });
     }
 
-    // Extrae los productos del carrito
     const cartProducts = cart.products.map(item => {
       let thumbnailArray = [];
       item.product.thumbnails.forEach(img => {
@@ -105,7 +103,6 @@ router.get('/carts/:cid', async (req, res) => {
       };
     });
 
-    // Renderiza la vista del carrito
     res.render('cart', {
       cartId: cid,
       products: cartProducts,
