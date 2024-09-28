@@ -48,7 +48,31 @@ router.post("/login", async (req, res) => {
     const foundUser = await UserModel.findOne({ email });
 
     if (!foundUser) {
-      return res.status(401).send("User not found");
+      return res.status(401).send(`
+        <!DOCTYPE html>
+        <html lang="es" class="dark">
+
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="shortcut icon" href="/img/favCircle.png" type="image/x-icon">
+          <script src="https://cdn.tailwindcss.com"></script>
+          <title>Artemisa-DB</title>
+        </head>
+
+        <body class="flex flex-col justify-between items-center h-screen w-screen bg-slate-900">
+            <h2 class="text-white text-5xl font-semibold pt-40">User not found. Redirecting to register in 3 seconds...</h2>
+
+          <footer class="mt-20">
+            <h2 class="pb-10 text-white">Muchas gracias. Patricio Pittana</h2>
+          </footer>
+        </body>
+        <script>
+          setTimeout(() => {
+            window.location.href = '/register';
+          }, 3000);
+        </script>
+      `);
     }
 
     if (!isValidPassword(password, foundUser)) {
