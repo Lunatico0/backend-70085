@@ -1,10 +1,16 @@
 import { Router } from 'express';
+import { config } from "dotenv";
 import ProductManager from '../dao/db/productManagerDb.js';
 import CartManager from '../dao/db/cartManagerDb.js';
 import CategoryModel from '../dao/models/categories.model.js';
+import jwt from "jsonwebtoken";
+
+config();
+
 const productManager = new ProductManager();
 const cartManager = new CartManager();
 const router = Router();
+const jwtSecret = process.env.JWT_SECRET;
 
 router.get(['/products', '/'], async (req, res) => {
   try {
@@ -154,16 +160,28 @@ router.get("/realTimeProducts", async (req, res) => {
   });
 });
 
-router.get('/register', (req, res) => {
-  res.render('register');
+const checkUserSession = (req, res, next) => {
+  const token = req.cookies['token'];
+
+  if (!token) {
+    return next();
+  }
+
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return next();
+    }
+
+    return res.redirect('/api/sessions/current');
+  });
+};
+
+router.get("/login", checkUserSession, (req, res) => {
+  res.render("login");
 });
 
-router.get('/login', (req, res) => {
-  res.render('login');
-});
-
-router.get('/profile', (req, res) => {
-  res.render('profile');
+router.get("/register", checkUserSession, (req, res) => {
+  res.render("register");
 });
 
 export default router;

@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { config } from "dotenv";
-import UserModel from '../dao/models/user.model.js';
 config();
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -20,30 +19,13 @@ const JWTOpctions = {
 };
 
 const initializePassport = () => {
-  passport.use('current', new JwtStrategy(JWTOpctions, async (jwtPayload, done) => {
-    try {
-      const user = await UserModel.findOne({ email: jwtPayload.email });
-      if (!user) {
-        return done(null, false);
+  passport.use("current", new JwtStrategy( JWTOpctions, async (jwt_payload, done) => {
+      try {
+          return done(null, jwt_payload);
+      } catch (error) {
+          return done(error);
       }
-      return done(null, user);
-    } catch (error) {
-      return done(error, false);
-    }
-  }));
-
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await UserModel.findById(id);
-      done(null, user);
-    } catch (error) {
-      done(error, null);
-    }
-  });
+  }))
 };
 
 export default initializePassport;
