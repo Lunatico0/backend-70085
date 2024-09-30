@@ -118,8 +118,7 @@ ExampleEntregaBackend2
    │  └─ authMiddleware.js
    ├─ public
    │  ├─ img
-   │  │  └─ assets
-   │  │  │  └─ favCircle.png
+   │  │  └─ favCircle.png
    │  └─ js
    │     └─ index.js
    ├─ routes
