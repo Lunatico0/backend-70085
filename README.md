@@ -120,7 +120,7 @@ ExampleEntregaBackend2
    │  ├─ img
    │  │  └─ favCircle.png
    │  └─ js
-   │     └─ index.js
+   │     └─ main.js
    ├─ routes
    │  ├─ session.router.js
    │  ├─ cart.router.js
