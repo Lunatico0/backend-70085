@@ -69,7 +69,6 @@ class CartManager {
     }
   };
 
-
   async deleteProductFromCart(idCart, idProduct) {
     if (!mongoose.Types.ObjectId.isValid(idCart) || !mongoose.Types.ObjectId.isValid(idProduct)) {
       throw new Error('Invalid cart or product ID');

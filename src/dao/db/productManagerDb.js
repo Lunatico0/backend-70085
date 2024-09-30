@@ -47,13 +47,13 @@ class ProductManager {
     if (subcategory) {
       query["category.subcategoria.subcategoriaId"] = subcategory;
     }
-  
+
     const options = {
       page,
       limit,
       sort,
     };
-  
+
     try {
       const productsList = await ProductModel.paginate(query, options);
       return {

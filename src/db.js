@@ -4,6 +4,6 @@ config();
 
 const TOKEN = process.env.URI;
 
-mongoose.connect(TOKEN, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(TOKEN)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Error connecting to MongoDB', err));

@@ -1,27 +1,31 @@
 <div class="bg-white p-8 rounded shadow-md w-full max-w-md m-auto">
   <h2 class="text-2xl font-semibold mb-6 text-center">Crear una Cuenta</h2>
   <form action="/api/sessions/register" method="POST" class="space-y-4">
+    {{!-- name --}}
     <div>
       <label for="name" class="block text-gray-700">Nombre</label>
       <input type="text" id="name" name="name"
         class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
     </div>
+    {{!-- lastName --}}
     <div>
       <label for="lastName" class="block text-gray-700">Apellido</label>
       <input type="text" id="lastName" name="lastName"
         class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
     </div>
+    {{!-- age --}}
     <div>
       <label for="age" class="block text-gray-700">Edad</label>
       <input type="text" id="age" name="age"
         class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
     </div>
+    {{!-- email --}}
     <div>
       <label for="email" class="block text-gray-700">Correo electrónico</label>
       <input type="email" id="email" name="email"
         class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
     </div>
-    <div></div>
+    {{!-- password --}}
     <div>
       <label for="password" class="block text-gray-700">Contraseña</label>
       <input type="text" id="password" name="password"
@@ -36,6 +40,7 @@
     <a href="/login" class="text-blue-500 hover:underline">Inicia sesión aquí</a>
   </p>
   <p class="text-center text-gray-500">--------- O ---------</p>
+  {{!-- Google & GitHub --}}
   <div class="flex justify-center mt-4 gap-2">
     <a href="/api/sessions/github">
       <svg viewBox="0 0 256 250" width="25" height="25" fill="#000" xmlns="http://www.w3.org/2000/svg"

@@ -11,12 +11,12 @@ import cartRouter from "./routes/cart.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import sessionRouter from "./routes/session.routes.js";
 import ProductManager from './dao/db/productManagerDb.js';
-import "./db.js"
+import "./db.js";
+
 config();
 
-const productManager = new ProductManager();
-
 const app = express();
+const productManager = new ProductManager();
 const PORT = process.env.PORT || 8080;
 
 // app.use(cors({
