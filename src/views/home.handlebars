@@ -232,7 +232,7 @@
 
       try {
 
-        const response = await fetch(`/api/carts/${user.cart}/products/${productId}`, {
+        const response = await fetch(`/api/carts/${user.user.cart}/products/${productId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -245,6 +245,8 @@
         if (response.ok) {
           const result = JSON.parse(responseText);
         } else {
+          console.log(`carrito: ${user.user.cart}`)
+          console.log(`productId: ${productId}`)
           console.error('Error al agregar producto al carrito:', response.statusText);
         }
       } catch (error) {
