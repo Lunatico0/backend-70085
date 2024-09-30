@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import cookieParser from "cookie-parser";
 
 config();
 
@@ -29,6 +30,6 @@ export const checkUserSession = (req, res, next) => {
       return next();
     }
 
-    return res.redirect('/api/sessions/current');
+    return res.redirect('/realTimeProducts');
   });
 };

@@ -103,6 +103,10 @@ router.post("/register", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
 
+  if (req.user && req.user.role == 'admin') {
+    return res.redirect('/realTimeProducts')
+  }
+
   const token = req.cookies['token'];
   if (token) {
     jwt.verify(token, jwtSecret);
