@@ -75,9 +75,6 @@ router.post('/:cid/products/:pid', passport.authenticate('current', { session: f
       return res.status(400).json({ message: 'No se pudo encontrar el carrito' });
     }
 
-    // console.log(cid)
-    // console.log(pid)
-
     const result = await manager.addProductToCart(cid, pid, quantity);
 
     if (result) {

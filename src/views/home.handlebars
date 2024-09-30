@@ -3,7 +3,7 @@
     <div class="flex w-60 justify-between items-center space-x-4">
       <a href="/api/sessions/cart"
         class="flex items-center text-white font-bold no-underline hover:no-underline" id="cartLink"></a>
-      <a href="/api/sessions/current" class="flex items-center text-white font-bold no-underline hover:no-underline"
+      <a href="/login" class="flex items-center text-white font-bold no-underline hover:no-underline"
         id="logProfile">Login</a>
     </div>
   </section>
@@ -210,6 +210,7 @@
     try {
       if (user) {
         logProfile.innerText = `${user.user.name} ${user.user.lastName}`;
+        logProfile.href = `/api/sessions/current`
         cartLink.innerText = `Carrito (${user.cart.products.length})`;
       }
     } catch (error) {
@@ -245,8 +246,6 @@
         if (response.ok) {
           const result = JSON.parse(responseText);
         } else {
-          console.log(`carrito: ${user.user.cart}`)
-          console.log(`productId: ${productId}`)
           console.error('Error al agregar producto al carrito:', response.statusText);
         }
       } catch (error) {

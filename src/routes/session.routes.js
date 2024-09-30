@@ -166,7 +166,6 @@ router.get('/current', (req, res, next) => {
     }
 
     req.user = user;
-    console.log("Usuario autenticado con JWT:", user);
 
     try {
       const cart = await manager.getCartById(user.cart);
