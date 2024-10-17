@@ -108,25 +108,29 @@ Este es el proyecto final del curso de Backend en Coderhouse, que implementa un 
 ## Ejecución del Proyecto
 
 1. Clona el repositorio:
-   ```git clone <URL_DEL_REPOSITORIO>```
+   `git clone <URL_DEL_REPOSITORIO>`
 
 2. Instala las dependencias:
-  ```npm install```
+  `npm install`
 
 3. Configura las variables de entorno en un archivo.
 -.env:
-   -JWT_SECRET: Clave secreta para firmar tokens JWT.
-   -MONGO_URI: Conexión a la base de datos MongoDB.
-   -PORT: Puerto donde se ejecutará la aplicación.
+
+   `-JWT_SECRET: Clave secreta para firmar tokens JWT.`
+   
+   `-MONGO_URI: Conexión a la base de datos MongoDB.`
+   
+   `-PORT: Puerto donde se ejecutará la aplicación.`
 
 5. Ejecuta el servidor:
-  ```npm run dev```
+  `npm run dev`
 
 ## Autor
 
 Patricio Pittana - [Linkedin](https://www.linkedin.com/in/patricio-pittana-2185b6177/) - [GitHub](https://github.com/Lunatico0) - [Web](https://pittanapatricio.vercel.app)
 
-ProyectoEcommerceBackend
+*ProyectoEcommerceBackend*
+```
 ├─ .gitignore
 ├─ package.json
 ├─ README.md
@@ -163,3 +167,4 @@ ProyectoEcommerceBackend
       ├─ login.handlebars
       ├─ home.handlebars
       └─ register.handlebars
+```
