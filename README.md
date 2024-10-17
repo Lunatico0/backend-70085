@@ -113,12 +113,13 @@ Este es el proyecto final del curso de Backend en Coderhouse, que implementa un 
 2. Instala las dependencias:
   ```npm install```
 
-3. Configura las variables de entorno en un archivo .env:
-  -JWT_SECRET: Clave secreta para firmar tokens JWT.
-  -MONGO_URI: Conexión a la base de datos MongoDB.
-  -PORT: Puerto donde se ejecutará la aplicación.
+3. Configura las variables de entorno en un archivo.
+-.env:
+   -JWT_SECRET: Clave secreta para firmar tokens JWT.
+   -MONGO_URI: Conexión a la base de datos MongoDB.
+   -PORT: Puerto donde se ejecutará la aplicación.
 
-4. Ejecuta el servidor:
+5. Ejecuta el servidor:
   ```npm run dev```
 
 ## Autor
@@ -138,16 +139,16 @@ ProyectoEcommerceBackend
    ├─ dao
    │  ├─ cartDao.js
    │  ├─ productDao.js
-   │  └─ userDao.js
+   │  ├─ userDao.js
+   │  └─ models
+   │     ├─ cart.model.js
+   │     ├─ product.model.js
+   │     ├─ ticket.model.js
+   │     └─ user.model.js
    ├─ dtos
    │  └─ userDto.js
    ├─ middlewares
    │  ├─ authMiddleware.js
-   ├─ models
-   │  ├─ cart.model.js
-   │  ├─ product.model.js
-   │  ├─ ticket.model.js
-   │  └─ user.model.js
    ├─ routes
    │  ├─ cart.router.js
    │  ├─ product.router.js
