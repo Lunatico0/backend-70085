@@ -108,18 +108,18 @@ Este es el proyecto final del curso de Backend en Coderhouse, que implementa un 
 ## Ejecución del Proyecto
 
 1. Clona el repositorio:
-   ```bash
-  -git clone <URL_DEL_REPOSITORIO>
+   ```bash -git clone <URL_DEL_REPOSITORIO>```
+
 2. Instala las dependencias:
-  ```bash
-  -npm install
+  ```bash -npm install```
+
 3. Configura las variables de entorno en un archivo .env:
     -JWT_SECRET: Clave secreta para firmar tokens JWT.
     -MONGO_URI: Conexión a la base de datos MongoDB.
     -PORT: Puerto donde se ejecutará la aplicación.
+
 4. Ejecuta el servidor:
-    ```bash
-  -npm run dev
+  ```bash-npm run dev```
 
 ## Autor
 
