@@ -108,8 +108,7 @@ Este es el proyecto final del curso de Backend en Coderhouse, que implementa un 
 ## Ejecución del Proyecto
 
 1. Clona el repositorio:
-   ```bash
-  -git clone <URL_DEL_REPOSITORIO>
+   ```bash -git clone <URL_DEL_REPOSITORIO>```
 2. Instala las dependencias:
   ```bash
   -npm install
