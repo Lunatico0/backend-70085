@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Homer",
+    "lastName": "Simpson",
+    "email": "homer.simpson@springfield.com",
+    "password": "donuts123",
+    "age": 39,
+    "role": "user"
+  },
+  {
+    "name": "Marge",
+    "lastName": "Simpson",
+    "email": "marge.simpson@springfield.com",
+    "password": "bluehair123",
+    "age": 36,
+    "role": "user"
+  },
+  {
+    "name": "Bart",
+    "lastName": "Simpson",
+    "email": "bart.simpson@springfield.com",
+    "password": "elBarto321",
+    "age": 10,
+    "role": "user"
+  },
+  {
+    "name": "Lisa",
+    "lastName": "Simpson",
+    "email": "lisa.simpson@springfield.com",
+    "password": "saxophone123",
+    "age": 8,
+    "role": "user"
+  },
+  {
+    "name": "Maggie",
+    "lastName": "Simpson",
+    "email": "maggie.simpson@springfield.com",
+    "password": "pacifier123",
+    "age": 1,
+    "role": "user"
+  },
+  {
+    "name": "Montgomery",
+    "lastName": "Burns",
+    "email": "montgomery.burns@springfieldnuclear.com",
+    "password": "excellent123",
+    "age": 104,
+    "role": "admin"
+  },
+  {
+    "name": "Waylon",
+    "lastName": "Smithers",
+    "email": "waylon.smithers@springfieldnuclear.com",
+    "password": "burnsLoyalty123",
+    "age": 40,
+    "role": "user"
+  },
+  {
+    "name": "Moe",
+    "lastName": "Szyslak",
+    "email": "moe.szyslak@moestavern.com",
+    "password": "bar123",
+    "age": 45,
+    "role": "user"
+  },
+  {
+    "name": "Ned",
+    "lastName": "Flanders",
+    "email": "ned.flanders@springfield.com",
+    "password": "howdilydoodily123",
+    "age": 60,
+    "role": "user"
+  },
+  {
+    "name": "Krusty",
+    "lastName": "the Clown",
+    "email": "krusty.clown@krustyburger.com",
+    "password": "funny123",
+    "age": 55,
+    "role": "user"
+  },
+  {
+    "name": "Apu",
+    "lastName": "Nahasapeemapetilon",
+    "email": "apu.nahasapeemapetilon@kwikemart.com",
+    "password": "kwikemart123",
+    "age": 45,
+    "role": "user"
+  }
+]

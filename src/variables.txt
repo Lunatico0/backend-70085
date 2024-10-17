@@ -1,0 +1,11 @@
+.env.dev:
+URI=mongodb+srv://pittanapatricio:Pittana1.@cluster0.3e9pt.mongodb.net/desarrollo?retryWrites=true&w=majority&appName=Cluster0
+PORT=4321
+JWT_SECRET=secretkey1234567890
+SESSION_SECRET=sessionkey1234567890
+
+.env.prod:
+URI=mongodb+srv://pittanapatricio:Pittana1.@cluster0.3e9pt.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0
+PORT=8080
+JWT_SECRET=secretkey1234567890
+SESSION_SECRET=sessionkey1234567890

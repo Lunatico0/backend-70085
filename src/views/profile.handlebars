@@ -1,14 +1,24 @@
-<header class="bg-gray-800 text-white p-4 w-full">
+<header class="bg-gray-800 w-full h-10 flex justify-between shadow-md">
   <nav class="container w-3/4 mx-auto flex justify-between items-center">
     <div>
-      <a href="/" class="text-lg font-semibold">Shop</a>
+      <a href="/" class="text-lg text-white font-semibold">Shop</a>
     </div>
-    <div>
-      <a href="/api/sessions/cart" class="text-lg font-semibold">Cart ({{ cart.products.length }})</a>
-    </div>
-    <form action="/api/sessions/logout" method="post">
-      <button class="bg-red-600 px-4 py-2 rounded hover:bg-red-700" type="submit">Logout</button>
-    </form>
+    <section class="flex justify-end items-center gap-8 w-full max-w-6xl mx-auto py-2 px-4">
+      <div class="flex items-center space-x-6">
+        <a id="cartLink" class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors"
+          href="/cart"><svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
+          </svg>
+          <span
+            class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{cart.products.length}}</span>
+        </a>
+      </div>
+      <form action="/api/sessions/logout" method="post">
+        <button class="bg-red-600 px-2 text-white py-1 text-sm rounded hover:bg-red-700" type="submit">Logout</button>
+      </form>
+    </section>
   </nav>
 </header>
 

@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
-import { config } from 'dotenv';
-config();
+import configObject from "./config/general.config.js";
 
-const TOKEN = process.env.URI;
+const { TOKEN } = configObject;
 
 mongoose.connect(TOKEN)
   .then(() => console.log('Connected to MongoDB'))

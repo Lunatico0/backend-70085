@@ -20,6 +20,6 @@ cartSchemma.pre(['find','findOne', 'findById'], function(next){
   next();
 })
 
-const CartModel = mongoose.model("carts", cartSchemma);
+const CartModel = mongoose.models.carts || mongoose.model("carts", cartSchemma);
 
 export default CartModel;

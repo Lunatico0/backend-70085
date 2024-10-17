@@ -1,0 +1,133 @@
+<header class="bg-gray-800 w-full shadow-md">
+  <nav class="container w-3/4 mx-auto flex justify-between items-center">
+    <div>
+      <a href="/" class="text-lg text-white font-semibold">Shop</a>
+    </div>
+    <section class="flex justify-end items-center w-full max-w-6xl mx-auto py-2 px-4">
+      <div class="flex items-center space-x-6">
+        {{#if user}}
+        <a id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors"
+          href="/profile"></a>
+        <a id="cartLink" class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors"
+          href="/cart"></a>
+        {{else}}
+        <a class="text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/login">Login</a>
+        {{/if}}
+      </div>
+    </section>
+  </nav>
+</header>
+
+<section class="max-w-2xl w-full mx-auto bg-white shadow-lg rounded-lg p-6 my-8">
+  <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 mb-4">Detalle de tu compra</h2>
+
+  <!-- Ticket ID -->
+  <div class="mb-4 flex justify-between">
+    <p class="text-sm text-gray-600">ID del ticket:</p>
+    <p class="text-md font-semibold text-gray-800">{{purchase._id}}</p>
+  </div>
+
+  <div class="mb-4 flex justify-between">
+    <p class="text-sm text-gray-600">Codigo de la compra:</p>
+    <p class="text-md font-semibold text-gray-800">{{purchase.code}}</p>
+  </div>
+
+  <hr class="my-4 border-gray-300">
+
+  <!-- Datos del comprador -->
+  <div class="mb-4">
+    <p class="text-sm text-gray-600">Datos del comprador:</p>
+    <p class="text-lg font-semibold text-gray-800">Nombre: {{user.lastName}} {{user.name}}</p>
+    <p class="text-lg font-semibold text-gray-800">Email: {{user.email}}</p>
+    <p class="text-sm text-gray-500">
+      <time datetime="{{purchase.purchase_datetime}}" id="purchaseDate">
+        {{purchase.purchase_datetime}}
+      </time>
+    </p>
+  </div>
+
+  <hr class="my-4 border-gray-300">
+
+  <!-- Detalle de la compra -->
+  <p class="text-sm text-gray-600">Detalle de la compra:</p>
+  <div class="mb-6 max-h-64 overflow-y-auto">
+    <ul class="space-y-4 mr-2">
+      {{#each products}}
+      <li class="grid grid-cols-[6fr_1fr_1fr] gap-4 items-center">
+        <h3 class="text-lg font-semibold text-gray-800 truncate max-w-sm">{{this._doc.title}}</h3>
+        <p class="text-lg text-gray-800 font-semibold">{{this.quantity}}</p>
+        <p class="text-lg text-gray-800 font-semibold">${{formatNumber (multiply this._doc.price this.quantity) 2}}</p>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <hr class="mt-4 border-gray-300">
+
+  <!-- Total -->
+  <div class="flex justify-between items-center mt-6">
+    <p class="text-xl font-bold text-gray-800">Total:</p>
+    <p class="text-2xl font-bold text-green-600">${{formatNumber purchase.amount 2}}</p>
+  </div>
+</section>
+
+
+<script>
+  const cartLink = document.getElementById("cartLink");
+  const logProfile = document.getElementById("logProfile"); const purchaseDateElement = document.getElementById('purchaseDate');
+
+  const purchaseDate = new Date(purchaseDateElement.getAttribute('datetime'));
+
+  const options = {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+
+  const formattedDate = new Intl.DateTimeFormat('es-ES', options).format(purchaseDate);
+
+  purchaseDateElement.innerText = `${formattedDate} (Hora Local)`;
+  const userLoged = (user) => {
+    try {
+      if (user) {
+        logProfile.innerText = `${user.user.name} ${user.user.lastName}`;
+        logProfile.href = `/profile`;
+        cartLink.innerHTML = `<svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
+        </svg>
+        <span
+          class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">${user.cart.products.length}
+        </span>`;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const main = async () => {
+    let res;
+    try {
+      res = await fetch('http://localhost:8080/api/sessions/current', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include'  // Incluir las cookies en la petición
+      });
+      const responseData = await res.json();
+      user = responseData;  // Asignar el usuario autenticado
+      console.log(user)
+      userLoged(user);
+    } catch (error) {
+      console.error('Error handling the request:', error);
+      setupAddButtons(); // Asegúrate de configurar los botones
+    }
+  };
+  main();
+</script>

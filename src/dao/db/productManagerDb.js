@@ -1,5 +1,4 @@
 import ProductModel from '../models/product.model.js';
-import mongoose from 'mongoose';
 
 class ProductManager {
   async addProduct({ title, description, price, code, stock, category, thumbnails }) {
