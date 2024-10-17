@@ -114,9 +114,9 @@ Este es el proyecto final del curso de Backend en Coderhouse, que implementa un 
   ```npm install```
 
 3. Configura las variables de entorno en un archivo .env:
-    -JWT_SECRET: Clave secreta para firmar tokens JWT.
-    -MONGO_URI: Conexión a la base de datos MongoDB.
-    -PORT: Puerto donde se ejecutará la aplicación.
+  -JWT_SECRET: Clave secreta para firmar tokens JWT.
+  -MONGO_URI: Conexión a la base de datos MongoDB.
+  -PORT: Puerto donde se ejecutará la aplicación.
 
 4. Ejecuta el servidor:
   ```npm run dev```
