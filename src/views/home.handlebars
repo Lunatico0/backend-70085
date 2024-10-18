@@ -8,7 +8,7 @@
       <div class="flex items-center space-x-6">
         {{#if user}}
         <a id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors"
-          href="/profile"></a>
+          href="/profile">{{user.name}}</a>
         <a id="cartLink" class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors"
           href="/cart"></a>
         {{else}}
@@ -217,10 +217,10 @@
     try {
       res = await fetch('http://localhost:8080/api/sessions/current', {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include'  // Incluir las cookies en la petición
       });
 
       if (!res.ok) {
@@ -243,6 +243,7 @@
   const userLoged = (user) => {
     try {
       if (user) {
+        console.log(`user.user: ${user.user}`)
         logProfile.innerText = `${user.user.name} ${user.user.lastName}`;
         logProfile.href = `/profile`;
         cartLink.innerHTML = `<svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"

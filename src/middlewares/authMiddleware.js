@@ -17,12 +17,12 @@ export const isAdmin = (req, res, next) => {
   next();
 };
 
-// Middleware para verificar si hay una sesión activa y evitar re-login
+
 export const checkUserSession = (req, res, next) => {
   const token = req.cookies['token'];
 
   if (!token) {
-    return next(); // No hay token, continúa con la siguiente función
+    return next();
   }
 
   jwt.verify(token, jwtSecret, (err, decoded) => {
@@ -30,9 +30,9 @@ export const checkUserSession = (req, res, next) => {
       return next();
     }
 
-    // if (req.path === '/login') {
-    //   return res.redirect('/');
-    // }
+    if (req.path === '/login') {
+      return res.redirect('/');
+    }
 
     req.user = decoded;
     return next();

@@ -7,7 +7,7 @@ import viewsRouter from "./routes/views.routes.js";
 import cookieParser from "cookie-parser";
 import configObject from "./config/general.config.js";
 import sessionRouter from "./routes/session.routes.js";
-import ProductManager from './dao/db/productManagerDb.js';
+import ProductManager from './DAO/db/productManagerDb.js';
 import productsRouter from "./routes/products.routes.js";
 import contactRouter from "./routes/contact.routes.js";
 import initializePassport from "./config/passport.config.js";
@@ -30,8 +30,12 @@ const app = express();
 const productManager = new ProductManager();
 const { PORT } = configObject;
 const { sessionSecret } = configObject;
+const corsOptions = {
+  origin: /https?:\/\/((.*\.)?mi-app\.com|(.*\.)?brs\.devtunnels\.ms)/,
+  credentials: true
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.use(express.json());

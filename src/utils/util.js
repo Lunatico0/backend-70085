@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import CartManager from "../DAO/db/cartManagerDb.js"
 import configObject from "../config/general.config.js";
 const { jwtSecret } = configObject;
 const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -8,6 +9,7 @@ const generateToken = (userId) => {
   return jwt.sign( { userId } , jwtSecret, { expiresIn: '1h' });
 }
 const assignCartToUser = async (user) => {
+  const manager = new CartManager();
   if (!user.cart) {
     const newCart = await manager.addCart();
     user.cart = newCart._id;
