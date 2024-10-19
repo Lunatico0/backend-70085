@@ -35,28 +35,7 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const user = await userServices.findByEmail(email);
-
-      if (!user) {
-        return res.render('error.handlebars', {
-          title: 'Error de Inicio de Sesión',
-          message: 'El email: ' + email + ' no se encuentra registrado.',
-          buttons: [
-            { text: 'Volver', href: '/login', method: 'GET', inputName: 'email', inputValue: email },
-            { text: 'Registrarse', href: '/register' }
-          ]
-        });
-      }
-
-      const validPassword = await userServices.verifyPassword(password, user.password);
-
-      if (!validPassword) {
-        return res.status(401).render('login', {
-          error: 'Credenciales incorrectas',
-          email
-        });
-      }
-
+      const user = await userServices.loginUser(email, password);
       const userWithCart = await assignCartToUser(user);
       const token = generateToken(userWithCart._id);
 
