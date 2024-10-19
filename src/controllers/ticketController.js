@@ -9,7 +9,6 @@ class TicketController {
 
       const { ticket, unavailableProducts } = await TicketService.processPurchase(cartId, userEmail);
 
-      // Si hay productos sin stock suficiente, no elimines productos del carrito aún
       if (unavailableProducts.length > 0) {
         return res.status(400).render('error', {
           title: 'Stock insuficiente',
@@ -30,7 +29,6 @@ class TicketController {
 
       await cartRepository.updateCart(cart._id, cart);
 
-      // Si no hay problemas de stock, continúa con la compra
       if (req.headers['accept'].includes('application/json')) {
         return res.status(200).json({
           message: 'Purchase completed',
@@ -39,17 +37,24 @@ class TicketController {
         });
       } else {
         return res.redirect(`/purchase/${ticket._id}`);
-      }
+      };
     } catch (error) {
-      return res.status(500).render('error', {
-        title: 'Compra fallida',
-        message: 'Hubo un error al procesar la compra',
-        description: error.message,
-        buttons: [
-          { text: 'Volver al carrito', href: `/cart` },
-          { text: 'Ir a inicio', href: '/' }
-        ]
-      });
+      if (req.headers['accept'].includes('application/json')) {
+        return res.status(500).json({
+          message: 'Error en la compra',
+          error: error.message
+        });
+      } else {
+        return res.status(500).render('error', {
+          title: 'Compra fallida',
+          message: 'Hubo un error al procesar la compra',
+          description: error.message,
+          buttons: [
+            { text: 'Volver al carrito', href: `/cart` },
+            { text: 'Ir a inicio', href: '/' }
+          ]
+        });
+      };
     };
   };
 
@@ -57,7 +62,7 @@ class TicketController {
     try {
       const { ticketId } = req.params;
       const ticket = await TicketService.getTicketById(ticketId);
-      const cart = await cartRepository.getCartById(req.user.cart); // Basado en la sesión
+      const cart = await cartRepository.getCartById(req.user.cart);
 
       if (!ticket.products) {
         throw new Error('El ticket no contiene productos');

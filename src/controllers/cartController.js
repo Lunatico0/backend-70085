@@ -1,4 +1,4 @@
-import CartManager from "../dao/db/cartManagerDb.js";
+import CartManager from "../DAO/db/cartManagerDb.js";
 
 const manager = new CartManager();
 

@@ -1,3 +1,52 @@
+<header class="bg-gray-800 w-full h-10 flex justify-between shadow-md">
+  <nav class="container w-3/4 mx-auto flex justify-between items-center">
+    <div>
+      <a href="/" class="text-lg text-white font-semibold">Shop</a>
+    </div>
+    <section class="flex justify-end items-center gap-8 w-full max-w-6xl mx-auto py-2 px-4">
+      <div class="flex items-center space-x-6 relative">
+        {{#if user}}
+
+        {{#ifCond user.role '==' 'admin'}}
+        <a href="/realTimeProducts" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors">Panel
+          de administración</a>
+        {{else}}
+        <a id="cartLink" class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors"
+          href="/cart">
+          <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
+          </svg>
+          <span
+            class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{cart.products.length}}</span>
+        </a>
+        {{/ifCond}}
+        <div class="relative group">
+          <p id="logProfile"
+            class="text-white text-sm font-semibold hover:text-gray-300 transition-colors cursor-pointer">{{user.name}}
+            {{user.lastName}}</p>
+          <!-- Dropdown menu -->
+          <ul
+            class="absolute w-fit right-0 mt-2 bg-gray-700 text-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+            <li><a href="/profile" class="block px-4 py-2 hover:bg-gray-600 hover:rounded-md">Perfil</a></li>
+            <li>
+              <form action="/api/sessions/logout" method="post">
+                <button class="block w-full text-left px-4 py-2 hover:bg-red-600 hover:rounded-md"
+                  type="submit">Logout</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+        {{else}}
+        <a id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors"
+          href="/login">Login</a>
+        {{/if}}
+      </div>
+    </section>
+  </nav>
+</header>
+
 <h2 class="my-8 text-white text-4xl font-bold">Panel de administracion IRT (in real time)</h2>
 
 <div id="limitContainer">

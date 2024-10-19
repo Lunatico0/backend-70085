@@ -4,15 +4,7 @@
       <a href="/" class="text-lg text-white font-semibold">Shop</a>
     </div>
     <section class="flex justify-end items-center w-full max-w-6xl mx-auto py-2 px-4">
-      <div class="flex items-center space-x-6">
-        {{#if userData}}
-        <a id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors"
-          href="/profile"></a>
-        <a id="cartLink" class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors"
-          href="/cart"></a>
-        {{else}}
-        <a class="text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/login">Login</a>
-        {{/if}}
+      <div id="userData" class="flex items-center space-x-6">
       </div>
     </section>
   </nav>
@@ -72,18 +64,16 @@
 </main>
 
 <script>
-  const cartLink = document.getElementById("cartLink");
-  const logProfile = document.getElementById("logProfile");
+  const userData = document.getElementById("userData");
 
   async function deleteProduct(userCart, productId) {
     const response = await fetch(`/api/carts/${userCart}/products/${productId}`, {
       method: 'DELETE',
-      credentials: 'include' // Asegúrate de incluir las cookies si es necesario
+      credentials: 'include'
     });
 
     if (response.ok) {
-      // Actualiza la interfaz después de eliminar el producto
-      location.reload(); // O actualiza el DOM manualmente
+      location.reload();
     } else {
       const errorText = await response.text();
       console.error(`Error al eliminar el producto: ${errorText}`);
@@ -105,21 +95,39 @@
   }
 
   const userLoged = (user) => {
-    try {
-      if (user) {
-        logProfile.innerText = `${user.user.name} ${user.user.lastName}`;
-        logProfile.href = `/profile`;
-        cartLink.innerHTML = `<svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
-        </svg>
-        <span
-          class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">${user.cart.products.length}
-        </span>`;
+    if (user) {
+      userData.innerHTML = `
+      <div class="relative group">
+        <p id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors cursor-pointer">
+          ${user.user.name} ${user.user.lastName}
+        </p>
+        <!-- Dropdown -->
+        <ul class="absolute right-0 mt-2 w-fit bg-gray-700 text-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+          <li><a href="/profile" class="block px-4 py-2 hover:bg-gray-600 hover:rounded-md">Perfil</a></li>
+          <li>
+            <form action="/api/sessions/logout" method="post">
+              <button class="block w-full text-left px-4 py-2 hover:bg-red-600 hover:rounded-md" type="submit">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+      `;
+
+      if (user.user.role === 'admin') {
+        userData.innerHTML += `
+        <a href="/realTimeProducts" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors">Panel de administración</a>
+        `;
+      } else {
+        userData.classList.replace('flex-row-reverse', 'flex-row');
+        userData.innerHTML += `
+        <a class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/cart">
+          <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns = "http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
+          </svg>
+          <span class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">${user.cart.products.length}</span>
+        </a>
+        `;
       }
-    } catch (error) {
-      console.log(error.message);
     }
   };
 
@@ -131,11 +139,10 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include'  // Incluir las cookies en la petición
+        credentials: 'include'
       });
       const responseData = await res.json();
-      user = responseData;  // Asignar el usuario autenticado
-      console.log(user)
+      user = responseData;
       userLoged(user);
     } catch (error) {
       console.error('Error handling the request:', error);

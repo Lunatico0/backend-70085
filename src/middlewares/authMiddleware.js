@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
+import passport from "passport";
 import configObject from "../config/general.config.js";
 import UserModel from "../DAO/models/user.model.js";
 
 const { jwtSecret } = configObject;
 
-// Middleware para validar si el usuario es admin
-export const isAdmin = (req, res, next) => {
+export const isAdmin = async  (req, res, next) => {
   if (!req.user) {
     return res.status(401).send('Usuario no autenticado. Inicia sesión.');
   }
@@ -16,7 +16,6 @@ export const isAdmin = (req, res, next) => {
 
   next();
 };
-
 
 export const checkUserSession = (req, res, next) => {
   const token = req.cookies['token'];
@@ -30,16 +29,11 @@ export const checkUserSession = (req, res, next) => {
       return next();
     }
 
-    if (req.path === '/login') {
-      return res.redirect('/');
-    }
-
     req.user = decoded;
     return next();
   });
 };
 
-// Middleware para validar la autenticidad del token y proteger rutas
 export const validateToken = (req, res, next) => {
   const token = req.cookies['token'];
 
@@ -58,7 +52,6 @@ export const validateToken = (req, res, next) => {
   });
 };
 
-// Middleware para verificar si el usuario tiene sesión activa
 export const validateUserSession = async (req, res, next) => {
   const token = req.cookies['token'];
 
@@ -86,4 +79,19 @@ export const validateUserSession = async (req, res, next) => {
       res.status(500).send("Error interno al buscar el usuario.");
     }
   });
+};
+
+export const authenticateCurrent = (req, res, next) => {
+  passport.authenticate('current', { session: false }, (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.redirect('/login');
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
 };

@@ -187,7 +187,7 @@ class viewsController {
   async userCart(req, res) {
     const user = req.user;
     if (!user) return res.status(401).json({ message: "User not found" })
-    const userData = await UserModel.findById(user.userId);
+    const userData = await UserModel.findById(user._id);
     const cart = await cartManager.getCartById(userData.cart);
     res.render('cart', { userData: userData, products: cart.products });
   }

@@ -1,6 +1,6 @@
 import userServices from "../services/userServices.js";
 import CartManager from "../DAO/db/cartManagerDb.js";
-import userDTO from "../dto/userDTO.js"
+import userDTO from "../DTO/userDto.js"
 import { assignCartToUser, generateToken } from "../utils/util.js";
 
 const manager = new CartManager();
@@ -68,7 +68,6 @@ class UserController {
       const user = req.user;
       const userDto = new userDTO(user);
       const cart = await manager.getCartById(user.cart);
-      console.log(userDto)
       res.json({ user: userDto, cart });
     } catch (error) {
       res.status(500).json({
