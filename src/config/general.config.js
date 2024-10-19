@@ -12,6 +12,7 @@ const configObject = {
   TOKEN: process.env.URI,
   jwtSecret: process.env.JWT_SECRET,
   sessionSecret: process.env.SESSION_SECRET,
+  mailerPassword: process.env.MAILER_PASSWORD
 }
 
 export default configObject;

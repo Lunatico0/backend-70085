@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import juice from 'juice';
+import nodemailer from 'nodemailer';
 import configObject from '../config/general.config.js';
 import ProductManager from '../DAO/db/productManagerDb.js';
 import CartManager from '../DAO/db/cartManagerDb.js';
@@ -10,7 +12,7 @@ import productsServices from "../services/productsServices.js";
 
 const productManager = new ProductManager();
 const cartManager = new CartManager();
-const { jwtSecret } = configObject;
+const { jwtSecret, mailerPassword } = configObject;
 
 class viewsController {
   async home(req, res) {
@@ -177,7 +179,8 @@ class viewsController {
   }
 
   login(req, res) {
-    res.render("login");
+    const { email } = req.query;
+    res.render("login", {email: email || ''});
   }
 
   register(req, res) {
@@ -211,7 +214,6 @@ class viewsController {
   async purchase(req, res) {
     const { purchaseId } = req.params;
     try {
-      // Verificar si el ID del ticket es válido
       if (!purchaseId.match(/^[0-9a-fA-F]{24}$/)) {
         return res.status(400).render('error', {
           title: 'ID inválido',
@@ -220,10 +222,8 @@ class viewsController {
         });
       };
 
-      // Obtener los detalles del ticket
       const purchaseDetails = await ticketServices.getTicketById(purchaseId);
 
-      // Si no se encuentra el ticket, mostrar mensaje de error
       if (!purchaseDetails) {
         return res.status(404).render('error', {
           title: 'Compra no encontrada',
@@ -232,7 +232,6 @@ class viewsController {
         });
       };
 
-      // Obtener detalles del usuario y productos
       const user = await userServices.findByEmail(purchaseDetails.purchaser);
       const products = await Promise.all(
         purchaseDetails.products.map(async (product) => {
@@ -244,11 +243,38 @@ class viewsController {
         })
       );
 
-      // Renderizar la vista de compra
+      const htmlTicket = await new Promise((resolve, reject) => {
+        res.render('purchase', { purchase: purchaseDetails, user, products }, (err, html) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(html);
+        });
+      });
+
+      const htmlWithoutHeader = htmlTicket.replace(/<header.*?<\/header>/s, '');
+      const htmlWithFooter = htmlWithoutHeader.replace(/<footer.*?<\/footer>/s, `<footer>Muchas gracias por tu compra. ARTEMISA</footer>`);
+      const htmlWithInlineStyles = juice(htmlWithFooter);
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        port: 587,
+        auth: {
+          user: 'pittanapatricio@gmail.com',
+          pass: mailerPassword
+        }
+      });
+
+      await transporter.sendMail({
+        from: "Artemisa <info@artemisa.com>",
+        to: user.email,
+        subject: `Tu compra en Artemisa - Ticket #${purchaseId}`,
+        html: htmlWithInlineStyles
+      });
+
       return res.render('purchase', { purchase: purchaseDetails, user, products });
 
     } catch (error) {
-      // Captura de errores generales
       console.error('Error al procesar la compra:', error);
 
       return res.status(500).render('error', {
