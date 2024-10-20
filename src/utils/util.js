@@ -19,6 +19,7 @@ const assignCartToUser = async (user) => {
       const newCart = await manager.addCart();
       user.cart = newCart._id;
       await user.save();
+      console.log(`usuario: ${user} con nuevo carrito: ${newCart}`)
     } catch (error) {
       console.error("Error al guardar el carrito al usuario:", error);
     }

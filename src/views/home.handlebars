@@ -12,28 +12,27 @@
 
   <!-- Sección de navegación -->
   <div class="bg-gray-900 min-w-full">
-    <nav class="flex justify-between w-3/4 mx-auto py-4 px-1">
-      <!-- Logo -->
-      <a href="/" class="text-white text-4xl font-extrabold hover:text-gray-300 transition-colors">Productos</a>
+    <nav class="flex justify-between max-w-[1366px] md:max-w-screen-xl mx-auto py-4 px-4">
+      <!-- Logo alineado a la izquierda -->
+      <a href="/"
+        class="text-white text-[clamp(1rem,2vw+1rem,2rem)] font-extrabold hover:text-gray-300 transition-colors">Productos</a>
 
       <!-- Menú de navegación -->
-      <ul class="flex gap-1">
+      <ul class="flex gap-1 items-center">
         {{#each categories}}
         <li class="relative group">
-          <!-- Ajustamos el link para que sea un bloque y ocupe todo el espacio del contenedor -->
           <a href="?category={{this.categoriaId}}"
-            class="text-white text-lg font-medium hover:text-gray-300 transition-colors block px-4 py-2 whitespace-nowrap{{#ifCond ../currentCategory '==' this.categoriaId}} text-blue-500{{/ifCond}}">
+            class="text-white text-[clamp(.5rem,.6vw+0.5rem,1rem)] lg:font-medium hover:text-gray-300 transition-colors block px-4 py-2 whitespace-nowrap{{#ifCond ../currentCategory '==' this.categoriaId}} text-blue-500{{/ifCond}}">
             {{this.categoriaNombre}}
           </a>
 
-          <!-- Subcategorías - se ocultan por defecto y se muestran en hover -->
           {{#if this.subcategorias}}
           <ul
             class="hidden w-full -mt-2 group-hover:block absolute bg-gray-800 p-4 pt-1.5 rounded shadow-lg space-y-2 min-w-max z-10">
             {{#each this.subcategorias}}
             <li>
               <a href="?category={{../categoriaId}}&subcategory={{this.subcategoriaId}}"
-                class="text-white text-sm hover:text-gray-300 transition-colors block whitespace-nowrap{{#ifCond ../../currentSubCategory '==' this.subcategoriaId}} text-blue-400 font-bold{{/ifCond}}">
+                class="text-white text-[clamp(0.875rem,1.5vw+0.25rem,1rem)] hover:text-gray-300 transition-colors block whitespace-nowrap{{#ifCond ../../currentSubCategory '==' this.subcategoriaId}} text-blue-400 font-bold{{/ifCond}}">
                 {{this.subcategoriaNombre}}
               </a>
             </li>
@@ -45,6 +44,7 @@
       </ul>
     </nav>
   </div>
+
 </header>
 
 <div
@@ -239,7 +239,7 @@
     if (user) {
       userData.innerHTML = `
       <div class="relative group">
-        <p id="logProfile" class="text-white text-sm font-semibold hover:text-gray-300 transition-colors cursor-pointer">
+        <p id="logProfile" class="text-white cursor-default text-sm font-semibold hover:text-gray-300 transition-colors">
           ${user.user.name} ${user.user.lastName}
         </p>
         <!-- Dropdown -->

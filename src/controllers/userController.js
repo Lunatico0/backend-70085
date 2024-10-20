@@ -38,7 +38,6 @@ class UserController {
       const user = await userServices.loginUser(email, password);
       const userWithCart = await assignCartToUser(user);
       const token = generateToken(userWithCart._id);
-
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: 60 * 60 * 1000,
@@ -79,10 +78,16 @@ class UserController {
   }
 
   async admin(req, res) {
-    if (req.user.role !== 'admin') {
+    let user = req.user;
+    if (user.role !== 'admin') {
       return res.status(403).send('No eres Admin!');
     }
-    res.render('realTimeProducts', { user: req.user });
+    console.log(`user.cart antes del assign: ${user.cart}`)
+    if(!user.cart){
+      console.log(`user.cart in admin 2: ${user.cart}`)
+      user = await assignCartToUser(user)
+    }
+    res.render('realTimeProducts', { user });
   }
 }
 

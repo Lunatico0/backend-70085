@@ -1,5 +1,6 @@
 import CartModel from '../models/cart.model.js';
 import mongoose from 'mongoose';
+import UserModel from '../models/user.model.js';
 
 class CartManager {
 
