@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/app.js -m prod",
-    "start": "node src/app.js",
+    "start": "node .",
     "build": "node src/app.js",
     "update-stock": "node scripts/updateStock.js"
   },
@@ -13,6 +13,10 @@
   "author": "",
   "license": "ISC",
   "description": "Este proyecto forma parte de la primera entrega para el curso de Backend II Coderhouse.",
+  "engines": {
+    "node": "20.13.1",
+    "npm": "10.8.2"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "commander": "^12.1.0",
@@ -28,6 +32,8 @@
     "mongoose-paginate-v2": "^1.8.3",
     "nodemailer": "^6.9.15",
     "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "socket.io": "^4.8.0",
     "uuid": "^10.0.0"

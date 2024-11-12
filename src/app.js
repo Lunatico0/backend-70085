@@ -16,6 +16,7 @@ import { Server } from "socket.io";
 import { handlebarsHelpers, calculateSubtotal, calculateTotal } from "./utils/handlebars.helpers.js"
 import "./db.js";
 import Handlebars from 'handlebars';
+import { callbackPromise } from 'nodemailer/lib/shared/index.js';
 
 // Registrar los helpers de Handlebars
 Object.keys(handlebarsHelpers).forEach((helper) => {
@@ -31,7 +32,19 @@ const productManager = new ProductManager();
 const { PORT } = configObject;
 const { sessionSecret } = configObject;
 const corsOptions = {
-  origin: /https?:\/\/((.*\.)?mi-app\.com|(.*\.)?brs\.devtunnels\.ms)/,
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'https://8dcz3969-5173.brs.devtunnels.ms',
+      'http://localhost:5173',
+      'https://artemisa.com.ar',
+      'https://artemisanogoya.vercel.app'
+    ];
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true); // Permitir origen
+    } else {
+      callback(new Error('Origen no permitido por CORS'));
+    }
+  },
   credentials: true
 };
 
@@ -39,11 +52,10 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"));
 
 initializePassport();
-app.use(passport.initialize());
 
 app.use(session({
   secret: sessionSecret,
@@ -55,6 +67,8 @@ app.use(session({
     secure: false
   }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine('handlebars', engine({
   runtimeOptions: {

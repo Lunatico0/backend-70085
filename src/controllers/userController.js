@@ -82,12 +82,19 @@ class UserController {
     if (user.role !== 'admin') {
       return res.status(403).send('No eres Admin!');
     }
-    console.log(`user.cart antes del assign: ${user.cart}`)
     if(!user.cart){
-      console.log(`user.cart in admin 2: ${user.cart}`)
       user = await assignCartToUser(user)
     }
-    res.render('realTimeProducts', { user });
+    // res.render('realTimeProducts', { user });
+    res.redirect('/realTimeProducts');
+  }
+
+  async googleCallback(req, res) {
+    res.redirect('/profile');
+  }
+
+  async githubCallback(req, res) {
+    res.redirect('/profile');
   }
 }
 

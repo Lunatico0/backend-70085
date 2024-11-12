@@ -1,10 +1,10 @@
 <header class="bg-gray-800 w-full shadow-md">
   <!-- Sección superior del header con enlaces -->
-  <nav class="container w-3/4 mx-auto flex justify-between items-center">
+  <nav class="container max-w-[80rem] w-3/4 mx-auto px-6 flex justify-between items-center">
     <div>
       <a href="/" class="text-lg text-white font-semibold">Shop</a>
     </div>
-    <section class="flex justify-end items-center w-full max-w-6xl mx-auto py-2 px-4">
+    <section class="flex justify-end items-center w-full max-w-6xl py-2 px-4">
       <div id="userData" class="flex flex-row-reverse items-center gap-6 relative">
       </div>
     </section>
@@ -97,7 +97,7 @@
     border-slate-400 border
     hover:bg-slate-500
     active:bg-slate-300
-    active:text-black mt-2
+    active:text-black mt-1
     text-white addProduct cursor-pointer flex justify-center rounded" id="{{this._id}}">Agregar</a>
   </div>
   {{/each}}
