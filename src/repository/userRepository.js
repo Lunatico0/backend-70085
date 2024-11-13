@@ -1,5 +1,5 @@
-import cartDao from "../DAO/cartDao.js";
-import userDao from "../DAO/userDao.js";
+import cartDao from "../dao/cartDao.js";
+import userDao from "../dao/userDao.js";
 
 class userRepositorie {
   async createUser(data){

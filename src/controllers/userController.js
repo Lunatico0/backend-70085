@@ -1,5 +1,5 @@
 import userServices from "../services/userServices.js";
-import CartManager from "../DAO/db/cartManagerDb.js";
+import CartManager from "../dao/db/cartManagerDb.js";
 import userDTO from "../DTO/userDto.js"
 import { assignCartToUser, generateToken } from "../utils/util.js";
 

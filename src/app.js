@@ -7,7 +7,7 @@ import viewsRouter from "./routes/views.routes.js";
 import cookieParser from "cookie-parser";
 import configObject from "./config/general.config.js";
 import sessionRouter from "./routes/session.routes.js";
-import ProductManager from './DAO/db/productManagerDb.js';
+import ProductManager from './dao/db/productManagerDb.js';
 import productsRouter from "./routes/products.routes.js";
 import contactRouter from "./routes/contact.routes.js";
 import initializePassport from "./config/passport.config.js";

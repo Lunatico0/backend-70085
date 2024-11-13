@@ -3,7 +3,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import GoogleStrategy from 'passport-google-oauth20';
 import GitHubStrategy from 'passport-github2';
 import configObject from "./general.config.js";
-import UserModel from '../DAO/models/user.model.js';
+import UserModel from '../dao/models/user.model.js';
 
 const { jwtSecret, googleClientID, googleClientSecret, githubClientID, githubClientSecret } = configObject;
 

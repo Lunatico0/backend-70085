@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import CartManager from "../DAO/db/cartManagerDb.js"
+import CartManager from "../dao/db/cartManagerDb.js"
 import configObject from "../config/general.config.js";
 const { jwtSecret } = configObject;
 

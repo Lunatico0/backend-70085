@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import configObject from "../config/general.config.js";
-import UserModel from "../DAO/models/user.model.js";
+import UserModel from "../dao/models/user.model.js";
 
 const { jwtSecret } = configObject;
 

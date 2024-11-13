@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 import juice from 'juice';
 import nodemailer from 'nodemailer';
 import configObject from '../config/general.config.js';
-import ProductManager from '../DAO/db/productManagerDb.js';
-import CartManager from '../DAO/db/cartManagerDb.js';
-import CategoryModel from '../DAO/models/categories.model.js'
-import UserModel from "../DAO/models/user.model.js";
+import ProductManager from '../dao/db/productManagerDb.js';
+import CartManager from '../dao/db/cartManagerDb.js';
+import CategoryModel from '../dao/models/categories.model.js'
+import UserModel from "../dao/models/user.model.js";
 import userServices from "../services/userServices.js";
 import ticketServices from "../services/ticketServices.js";
 import productsServices from "../services/productsServices.js";
