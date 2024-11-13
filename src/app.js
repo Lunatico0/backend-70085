@@ -38,7 +38,8 @@ const corsOptions = {
       'http://localhost:5173',
       'https://artemisa.com.ar',
       'https://artemisanogoya.vercel.app',
-      'https://backend-70085.onrender.com'
+      'https://backend-70085.onrender.com',
+      'https://artemisa-db.vercel.app/'
     ];
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true); // Permitir origen
