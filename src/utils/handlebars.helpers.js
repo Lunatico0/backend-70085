@@ -66,6 +66,7 @@ const handlebarsHelpers = {
   },
 };
 const calculateSubtotal = (products) => {
+  console.log(products)
   return products.reduce((acc, product) => acc + (product.product.price * product.quantity), 0);
 }
 const calculateTotal = (products) => {

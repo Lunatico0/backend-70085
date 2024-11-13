@@ -69,7 +69,7 @@ class UserController {
       const cart = await manager.getCartById(user.cart);
       res.json({ user: userDto, cart });
     } catch (error) {
-      res.status(500).json({
+      res.status(501).json({
         status: 'error',
         message: 'Error al obtener el perfil y carrito.',
         details: error.message

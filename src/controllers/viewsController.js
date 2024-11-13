@@ -24,7 +24,18 @@ class viewsController {
       if (token) {
         try {
           const decodedUser = jwt.verify(token, jwtSecret);
-          user = decodedUser;
+          let res;
+          if (decodedUser) {
+            res = await fetch('http://localhost:8080/api/sessions/current', {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            const responseData = await res.json();
+            user = responseData;
+          }
         } catch (error) {
           console.log("Token no válido o expirado:", error.message);
         }
@@ -180,7 +191,7 @@ class viewsController {
 
   login(req, res) {
     const { email } = req.query;
-    res.render("login", {email: email || ''});
+    res.render("login", { email: email || '' });
   }
 
   register(req, res) {

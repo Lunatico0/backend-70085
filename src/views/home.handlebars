@@ -10,7 +10,7 @@
         <div class="relative group">
           <p id="logProfile"
             class="text-white cursor-default text-sm font-semibold hover:text-gray-300 transition-colors">
-            {{user.user.name}} {{user.user.lastName}}
+            {{user.name}} {{user.lastName}}
           </p>
           <!-- Dropdown -->
           <ul
@@ -256,22 +256,7 @@
 
   const userLoged = (user) => {
     if (user) {
-      userData.innerHTML = `
-      <div class="relative group">
-        <p id="logProfile" class="text-white cursor-default text-sm font-semibold hover:text-gray-300 transition-colors">
-          ${user.user.name} ${user.user.lastName}
-        </p>
-        <!-- Dropdown -->
-        <ul class="absolute right-0 mt-2 w-fit bg-gray-700 text-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
-          <li><a href="/profile" class="block px-4 py-2 hover:bg-gray-600 hover:rounded-md">Perfil</a></li>
-          <li>
-            <form action="/api/sessions/logout" method="post">
-              <button class="block w-full text-left px-4 py-2 hover:bg-red-600 hover:rounded-md" type="submit">Logout</button>
-            </form>
-          </li>
-        </ul>
-      </div>
-      `;
+
 
       if (user.user.role === 'admin') {
         userData.innerHTML += `
@@ -288,11 +273,6 @@
         </a>
         `;
       }
-    } else {
-      userData.innerHTML = `
-        <a class="text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/login">
-          Login
-        </a>`;
     }
   };
 
