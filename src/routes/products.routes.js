@@ -7,6 +7,8 @@ router.get('/', productController.getAllProducts);
 
 router.get("/:pid", productController.getProductById);
 
+router.get('/categories', productController.getCategories);
+
 router.post("/", productController.addProduct);
 
 router.put("/:pid", productController.updateProduct);

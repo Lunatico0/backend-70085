@@ -1,5 +1,6 @@
 import ProductManager from "../dao/db/productManagerDb.js";
 import productsServices from "../services/productsServices.js";
+import CategoryModel from '../dao/models/categories.model.js'
 const manager = new ProductManager();
 
 class productController {
@@ -65,6 +66,14 @@ class productController {
       nextLink: nextLink
     });
   };
+
+  async getCategories(req, res){
+    const categories = await CategoryModel.find().lean();
+    res.json({
+      status: "success",
+      categories: categories
+    })
+  }
 
   async getProductById(req, res) {
     let id = req.params.pid;
