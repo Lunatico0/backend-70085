@@ -67,12 +67,16 @@ class productController {
     });
   };
 
-  async getCategories(req, res){
-    const categories = await CategoryModel.find().lean();
-    res.json({
-      status: "success",
-      categories: categories
-    })
+  async getCategories(req, res) {
+    try {
+      const categories = await CategoryModel.find().lean();
+      res.json({
+        status: "success",
+        categories: categories
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getProductById(req, res) {

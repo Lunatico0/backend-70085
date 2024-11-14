@@ -5,9 +5,9 @@ const router = Router();
 
 router.get('/', productController.getAllProducts);
 
-router.get("/:pid", productController.getProductById);
-
 router.get('/categories', productController.getCategories);
+
+router.get("/:pid", productController.getProductById);
 
 router.post("/", productController.addProduct);
 
