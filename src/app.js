@@ -43,7 +43,7 @@ const corsOptions = {
       'https://artemisa-pvc.com',
       'https://www.artemisa-pvc.com'
     ];
-    if (allowedOrigins.includes(origin) || !origin) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Permitir origen
     } else {
       callback(new Error('Origen no permitido por CORS'));
