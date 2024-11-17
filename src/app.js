@@ -40,7 +40,7 @@ const corsOptions = {
       'https://artemisa.com.ar',
       'https://artemisanogoya.vercel.app',
       'https://backend-70085.onrender.com',
-      'https://artemisa-db.vercel.app/'
+      'https://www.artemisa-pvc.com/'
     ];
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true); // Permitir origen
