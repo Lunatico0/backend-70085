@@ -24,11 +24,14 @@
             </li>
           </ul>
           <a class="relative text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/cart">
-          <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns = "http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
-          </svg>
-          <span class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{user.cart.products.length}}</span>
-        </a>
+            <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13l-1.5-6M7 13h10m-6 4h.01M13 17h.01" />
+            </svg>
+            <span
+              class="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{user.cart.products.length}}</span>
+          </a>
         </div>
         {{else}}
         <a class="text-white text-sm font-semibold hover:text-gray-300 transition-colors" href="/login">
@@ -73,6 +76,7 @@
       </ul>
     </nav>
   </div>
+
 
 </header>
 

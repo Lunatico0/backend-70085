@@ -68,8 +68,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://vercel.live"],
-      imgSrc: ["'self'", "data:"],
+      scriptSrc: ["'self'", "https://vercel.live", "https://cdn.tailwindcss.com"],
+      imgSrc: ["'self'", "data:", "https://vigorita.com.ar"],
     },
   })
 );
