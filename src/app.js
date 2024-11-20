@@ -67,16 +67,12 @@ initializePassport();
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", "https://artemisa-db.vercel.app"],
-      scriptSrc: ["'self'", "https://vercel.live", "https://artemisa-db.vercel.app", "https://cdn.tailwindcss.com"],
-      imgSrc: ["'self'", "https://artemisa-db.vercel.app", "https://cdn.jsdelivr.net", "data:"],
-      styleSrc: ["'self'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://vercel.live", "https://cdn.tailwindcss.com"],
+      imgSrc: ["'self'", "data:", "https://vigorita.com.ar"],
     },
   })
 );
-
-
 
 app.use(session({
   secret: sessionSecret,
