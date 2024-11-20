@@ -1,4 +1,5 @@
 import cors from 'cors';
+import helmet from 'helmet';
 import session from 'express-session';
 import express from "express";
 import passport from "passport";
@@ -62,6 +63,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"));
 
 initializePassport();
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://vercel.live"],
+      imgSrc: ["'self'", "data:"],
+    },
+  })
+);
 
 app.use(session({
   secret: sessionSecret,
