@@ -22,7 +22,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://vercel.live https://cdn.tailwindcss.com; img-src 'self' data: https://vigorita.com.ar;"
+          "value": "default-src 'self' https://artemisa-db.vercel.app; script-src 'self' https://vercel.live https://artemisa-db.vercel.app; img-src 'self' https://artemisa-db.vercel.app data:;"
         }
       ]
     }
