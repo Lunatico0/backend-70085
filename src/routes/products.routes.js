@@ -15,4 +15,6 @@ router.put("/:pid", productController.updateProduct);
 
 router.delete("/:pid", productController.deleteProduct);
 
+router.get('/ping', (req, res) => res.status(200).send('pong'));
+
 export default router;
