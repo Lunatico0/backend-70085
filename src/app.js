@@ -39,6 +39,7 @@ const corsOptions = {
       'http://localhost:8080',
       'https://artemisa.com.ar',
       'https://artemisanogoya.vercel.app',
+      'https://artemisa-db.vercel.app',
       'https://backend-70085.onrender.com',
       'https://artemisa-pvc.com',
       'https://www.artemisa-pvc.com'
