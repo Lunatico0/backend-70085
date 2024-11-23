@@ -33,12 +33,14 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     categoriaId: {
-      type: String, // Almacena el ID de la categoría como string
+      type: String,
       required: true
     },
-    subcategoriaId: {
-      type: String, // Almacena el ID de la subcategoría como string
-      required: false
+    subcategoria: {
+      subcategoriaId: {
+        type: String,
+        required: false
+      }
     }
   },
   thumbnails: {

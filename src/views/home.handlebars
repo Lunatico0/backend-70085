@@ -254,13 +254,13 @@
       }
 
       const responseData = await res.json();
-      user = responseData;  // Asignar el usuario autenticado
-      userLoged(user);  // Mostrar la información del usuario logueado
-      setupAddButtons(); // Configurar los botones para agregar productos
+      user = responseData;
+      userLoged(user);
+      setupAddButtons();
 
     } catch (error) {
       console.error('Error handling the request:', error);
-      setupAddButtons(); // Asegúrate de configurar los botones
+      setupAddButtons();
     }
   };
 
@@ -286,7 +286,7 @@
     }
   };
 
-  // configurar los botones de agregar productos
+
   const setupAddButtons = () => {
     const addButtons = Array.from(document.getElementsByClassName('addProduct'));
 

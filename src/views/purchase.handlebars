@@ -155,15 +155,15 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include'  // Incluir las cookies en la petición
+        credentials: 'include'
       });
       const responseData = await res.json();
-      user = responseData;  // Asignar el usuario autenticado
+      user = responseData;
       console.log(user)
       userLoged(user);
     } catch (error) {
       console.error('Error handling the request:', error);
-      setupAddButtons(); // Asegúrate de configurar los botones
+      setupAddButtons();
     }
   };
   main();

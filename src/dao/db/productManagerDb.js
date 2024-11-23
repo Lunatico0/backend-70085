@@ -36,14 +36,14 @@ class ProductManager {
     }
   };
 
-  async getProducts(page, limit, sort, category = null, subcategory = null) {
+  async getProducts(page, limit, sort, category, subcategory) {
     const query = {};
 
-    if (category) {
+    if (category && category !== "null") {
       query["category.categoriaId"] = category;
     }
 
-    if (subcategory) {
+    if (subcategory && subcategory !== "null") {
       query["category.subcategoria.subcategoriaId"] = subcategory;
     }
 
@@ -60,8 +60,8 @@ class ProductManager {
         productsList,
       };
     } catch (error) {
-      console.error('Error fetching products:', error);
-      throw new Error('Failed to fetch products');
+      console.error("Error fetching products:", error);
+      throw new Error("Failed to fetch products");
     }
   }
 

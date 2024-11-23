@@ -46,7 +46,6 @@ class TicketService {
       };
       const ticket = await TicketRepository.create(ticketData);
 
-      // Solo aquí se debería modificar el carrito al confirmar la compra de los productos
       return { ticket, unavailableProducts };
     } else {
       throw new Error('No products available for purchase');
