@@ -44,7 +44,8 @@ const corsOptions = {
       'https://artemisa-db.vercel.app',
       'https://backend-70085.onrender.com',
       'https://artemisa-pvc.com',
-      'https://www.artemisa-pvc.com'
+      'https://www.artemisa-pvc.com',
+      'http://localhost:5173/'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Permitir origen

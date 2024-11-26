@@ -2,6 +2,7 @@ import { Router } from 'express';
 import nodemailer from 'nodemailer';
 
 const router = Router();
+
 const transport = nodemailer.createTransport({
   service: 'gmail',
   port: 587,
