@@ -47,7 +47,7 @@ const corsOptions = {
       'http://localhost:5173'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Permitir origen
+      callback(null, true);
     } else {
       callback(new Error('Origen no permitido por CORS'));
     }
@@ -68,7 +68,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://vercel.live", "https://cdn.tailwindcss.com"],
+      scriptSrc: ["'self'", "https://vercel.live", "https://cdn.tailwindcss.com", "https://cdnjs.cloudflare.com"],
       imgSrc: ["'self'", "data:", "https://vigorita.com.ar"],
     },
   })
