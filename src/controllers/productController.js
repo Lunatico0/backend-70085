@@ -92,6 +92,19 @@ class productController {
   async updateProduct(req, res) {
     const id = req.params.pid;
     const newData = req.body;
+
+    if (newData.category && newData.category.categoriaId && newData.category.subcategoria) {
+      const { categoriaId, subcategoria } = newData.category;
+      newData.category = {
+        categoriaId,
+        categoriaNombre: categoriaId.charAt(0).toUpperCase() + categoriaId.slice(1),
+        subcategoria: {
+          subcategoriaId: subcategoria.subcategoriaId,
+          subcategoriaNombre: subcategoria.subcategoriaNombre
+        }
+      };
+    }
+
     try {
       const updatedProduct = await manager.updateProduct(id, newData);
       !updatedProduct ? res.status(404).send({ message: "Error al actualizar el producto" }) : res.status(200).send(`Se ha actualizado el producto ${newData.title} correctamente`);

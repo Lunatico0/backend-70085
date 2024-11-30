@@ -67,7 +67,7 @@ class ProductManager {
 
   async updateProduct(id, data) {
     try {
-      const updated = await ProductModel.findByIdAndUpdate(id, data);
+      const updated = await ProductModel.findByIdAndUpdate(id, data, { new: true });
       if (!updated) {
         console.log("No se encontró el producto");
         return "No se encontró el producto";
