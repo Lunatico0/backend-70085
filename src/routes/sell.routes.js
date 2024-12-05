@@ -4,6 +4,8 @@ import sellController from '../controllers/sellController.js';
 
 const router = Router();
 
-router.post('/', validarVenta, sellController.crearVenta);
+router.get('/', sellController.getSells)
+
+router.post('/', validarVenta, sellController.newSell);
 
 export default router;
