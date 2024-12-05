@@ -11,15 +11,15 @@ router.get("/", cartController.getAllCarts);
 
 router.get("/:cid", cartController.getCartById);
 
-router.post('/:cid/purchase',  validateUserSession, ticketController.purchaseCart);
+router.post('/:cid/purchase', ticketController.purchaseCart);
 
-router.post('/:ticketId/confirm-purchase', validateUserSession, ticketController.confirmPurchase);
+router.post('/:ticketId/confirm-purchase', ticketController.confirmPurchase);
 
 router.post("/", cartController.addCart);
 
-router.post("/:pid", authenticateCurrent, cartController.updateProductsInCart);
+router.post("/:pid", cartController.updateProductsInCart);
 
-router.post('/:cid/products/:pid', authenticateCurrent, cartController.updateProductsInCartById);
+router.post('/:cid/products/:pid', cartController.updateProductsInCartById);
 
 router.put("/:cid", cartController.updateCartById);
 
