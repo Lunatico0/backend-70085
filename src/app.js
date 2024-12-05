@@ -4,6 +4,7 @@ import session from 'express-session';
 import express from "express";
 import passport from "passport";
 import cartRouter from "./routes/cart.routes.js";
+import sellRouter from "./routes/sell.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import cookieParser from "cookie-parser";
 import configObject from "./config/general.config.js";
@@ -101,6 +102,7 @@ app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);
 app.use('/api/sessions', sessionRouter);
 app.use('/contact', contactRouter);
+app.use('/api/sells', sellRouter);
 app.use('/', viewsRouter);
 
 const httpServer = app.listen(PORT, () => {

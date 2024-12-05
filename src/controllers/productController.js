@@ -1,5 +1,4 @@
 import ProductManager from "../dao/db/productManagerDb.js";
-import productsServices from "../services/productsServices.js";
 import CategoryModel from '../dao/models/categories.model.js'
 const manager = new ProductManager();
 
