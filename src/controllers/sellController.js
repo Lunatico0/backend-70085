@@ -1,4 +1,4 @@
-import sellManager from "../DAO/db/sellManager.js";
+import sellManager from "../dao/db/sellManager.js";
 
 class sellController {
   async newSell(req, res) {
