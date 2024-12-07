@@ -65,6 +65,21 @@ class ProductManager {
     }
   }
 
+  async search(query, { page, limit }) {
+    const regex = new RegExp(query, 'i');
+    const skip = (page - 1) * limit;
+    const products = await productModel.find({ title: regex })
+      .skip(skip)
+      .limit(limit);
+    const total = await ProductModel.countDocuments({ title: regex });
+    return {
+      status: 'success',
+      payload: products,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
+  };
+
   async updateProduct(id, data) {
     try {
       const updated = await ProductModel.findByIdAndUpdate(id, data, { new: true });
