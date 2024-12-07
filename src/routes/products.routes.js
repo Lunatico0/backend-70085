@@ -9,8 +9,6 @@ router.get('/categories', productController.getCategories);
 
 router.get("/:pid", productController.getProductById);
 
-router.get('/search', productController.searchProducts);
-
 router.post("/", productController.addProduct);
 
 router.put("/:pid", productController.updateProduct);

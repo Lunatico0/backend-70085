@@ -7,8 +7,8 @@ class productController {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 15;
     const querySort = req.query.sort || "defa";
-    const category = req.query.category || null;
-    const subcategory = req.query.subcategory || null;
+    const category = req.query.category || null; // Si no se pasa, será null
+    const subcategory = req.query.subcategory || null; // Si no se pasa, será null
     let sort = {};
 
     switch (querySort) {
@@ -75,16 +75,6 @@ class productController {
       !product ? res.send("No se encuentra el producto deseado") : res.send({ product });
     } catch (error) {
       console.log(error)
-    }
-  };
-
-  async searchProducts(req, res) {
-    const { query, page = 1, limit = 10 } = req.query;
-    try {
-      const result = await manager.search(query, { page, limit });
-      res.status(200).json(result);
-    } catch (error) {
-      res.status(500).json({ status: 'error', message: error.message });
     }
   };
 
