@@ -11,7 +11,7 @@ class sellController {
 
       const productosInvalidos = products.filter(p => !p.productId || !p.quantity || !p.price);
       if (productosInvalidos.length > 0) {
-        return res.status(400).json({ error: 'Los productos deben tener productId, quantity y price.' });
+        return res.status(400).json({ error: 'Los productos deben tener productId, quantity, sellPrice y buyPrice.' });
       }
 
       const venta = await sellManager.newSell({ products, client });

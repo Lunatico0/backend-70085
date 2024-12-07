@@ -13,7 +13,11 @@ const sellSchema = new mongoose.Schema({
         type: Number,
         required: true
       },
-      price: {
+      salePrice: {
+        type: Number,
+        required: true
+      },
+      buyPrice:{
         type: Number,
         required: true
       }
