@@ -9,23 +9,44 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  dni:{
+    type: Number,
+    required: true
+  },
   email:{
     type: String,
     required: true,
     index: true,
     unique: true
   },
-  password:{
-    type: String,
-  },
-  age:{
+  phone:{
     type: Number,
     required: true
   },
-  role:{
-    type: String,
-    enum: ['admin', 'user'],
-    default: 'user'
+  address:{
+    steet:{
+      type: String,
+      required: true
+    },
+    number:{
+      type: Number,
+      required: true
+    },
+    city:{
+      type: String,
+      required: true
+    },
+    province:{
+      type: String,
+      required: true
+    },
+    country:{
+      type: String,
+    },
+    zipCode:{
+      type: Number,
+      required: true
+    }
   },
   cart: {
     type: mongoose.Schema.Types.ObjectId,
