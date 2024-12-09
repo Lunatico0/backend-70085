@@ -6,7 +6,7 @@ class userRepositorie {
     return await userDao.findAll();
   }
 
-  async createNewClient() {
+  async createNewClient(clientData) {
     return await userDao.create(clientData);
   }
 
