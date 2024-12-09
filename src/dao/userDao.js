@@ -1,16 +1,6 @@
 import UserModel from "./models/user.model.js";
-import ClientModel from "./models/clientModel.js";
 
 class userDao {
-  async findAll() {
-    return await ClientModel.find();
-  }
-
-  async create(clientData) {
-    const newClient = new ClientModel(clientData);
-    return await newClient.save();
-  }
-
   async findById(id) {
     return await UserModel.findById(id);
   };

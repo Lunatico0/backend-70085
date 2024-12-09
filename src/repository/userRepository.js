@@ -1,13 +1,18 @@
 import cartDao from "../dao/cartDao.js";
 import userDao from "../dao/userDao.js";
+import clientDao from "../dao/clientDao.js";
 
 class userRepositorie {
   async getAllClients() {
-    return await userDao.findAll();
+    return await clientDao.findAll();
   }
 
   async createNewClient(clientData) {
-    return await userDao.create(clientData);
+    return await clientDao.create(clientData);
+  }
+
+  async getClientById(id) {
+    return await clientDao.findClientById(id);
   }
 
   async createUser(data){

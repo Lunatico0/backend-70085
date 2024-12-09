@@ -25,6 +25,17 @@ class UserController {
     }
   }
 
+  async getClientById(req, res) {
+    try {
+      const clientId = req.params.id;
+      const client = await userServices.getClientById(clientId);
+      res.status(200).json(client);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener el cliente', details: error.message });
+
+    }
+  }
+
   async register(req, res) {
     const { name, lastName, email, password, age } = req.body;
     try {
@@ -101,7 +112,7 @@ class UserController {
     if (user.role !== 'admin') {
       return res.status(403).send('No eres Admin!');
     }
-    if(!user.cart){
+    if (!user.cart) {
       user = await assignCartToUser(user)
     }
     // res.render('realTimeProducts', { user });

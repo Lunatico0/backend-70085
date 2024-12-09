@@ -10,6 +10,12 @@ class UserServices {
     return await userRepository.createNewClient(clientData);
   }
 
+  async getClientById (id) {
+    const client = await userRepository.getClientById(id)
+    if (!client) throw new Error('El cliente no existe');
+    return client;
+  }
+
   async getUserProfile(session) {
     if (!session || !session.user) throw new Error('User not authenticated');
     const user = await userRepository.getUserById(session.user._id);
