@@ -2,6 +2,14 @@ import { createHash, isValidPassword } from "../utils/util.js";
 import userRepository from '../repository/userRepository.js';
 
 class UserServices {
+  async getAllClients () {
+    return await userRepository.getAllClients()
+  }
+
+  async createClient (clientData) {
+    return await userRepository.createNewClient(clientData);
+  }
+
   async getUserProfile(session) {
     if (!session || !session.user) throw new Error('User not authenticated');
     const user = await userRepository.getUserById(session.user._id);

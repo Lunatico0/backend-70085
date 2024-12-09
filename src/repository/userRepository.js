@@ -2,6 +2,14 @@ import cartDao from "../dao/cartDao.js";
 import userDao from "../dao/userDao.js";
 
 class userRepositorie {
+  async getAllClients() {
+    return await userDao.findAll();
+  }
+
+  async createNewClient() {
+    return await userDao.create(clientData);
+  }
+
   async createUser(data){
     return userDao.save(data);
   };

@@ -1,11 +1,20 @@
 import UserModel from "./models/user.model.js";
 
 class userDao {
-  async findById(id){
+  async findAll() {
+    return await UserModel.find();
+  }
+
+  async create(clientData) {
+    const newClient = new UserModel(clientData);
+    return await newClient.save();
+  }
+
+  async findById(id) {
     return await UserModel.findById(id);
   };
 
-  async save(data){
+  async save(data) {
     const user = new UserModel(data);
     return await user.save();
   };
@@ -19,7 +28,7 @@ class userDao {
   };
 
   async findByEmail(email) {
-    return await UserModel.findOne({email: email});
+    return await UserModel.findOne({ email: email });
   }
 };
 

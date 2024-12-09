@@ -1,8 +1,6 @@
 import { Router } from "express";
-import passport from "passport";
 import CartController from "../controllers/cartController.js";
 import ticketController from "../controllers/ticketController.js";
-import { authenticateCurrent, validateUserSession } from "../middlewares/authMiddleware.js";
 
 const cartController = new CartController()
 const router = Router();

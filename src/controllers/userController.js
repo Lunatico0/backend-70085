@@ -6,6 +6,25 @@ import { assignCartToUser, generateToken } from "../utils/util.js";
 const manager = new CartManager();
 
 class UserController {
+  async newClient(req, res) {
+    try {
+      const newClientData = req.body;
+      const newClient = await userServices.createClient(newClientData);
+      res.status(201).json(newClient);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al crear el cliente', details: error.message });
+    }
+  }
+
+  async getClients(req, res) {
+    try {
+      const clients = await userServices.getAllClients();
+      res.status(200).json(clients);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los clientes', details: error.message });
+    }
+  }
+
   async register(req, res) {
     const { name, lastName, email, password, age } = req.body;
     try {
