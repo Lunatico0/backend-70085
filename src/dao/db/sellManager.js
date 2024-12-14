@@ -12,13 +12,11 @@ class VentasManager {
 
   async getSells() {
     try {
-      const ventas = await SellsModel.find().populate({
-        path: 'products',
-        model: 'products'
-      }).populate({
-        path: 'clients',
-        model: 'clients'
-      });
+      const ventas = await SellsModel.find()
+        .populate('products', 'products')
+        .populate('client', 'clients');
+
+      console.log(ventas)
       return ventas
     } catch (error) {
       throw new Error('Error al obtener las ventas: ' + error.message);

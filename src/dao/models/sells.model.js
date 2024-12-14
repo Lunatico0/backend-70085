@@ -17,7 +17,7 @@ const sellSchema = new mongoose.Schema({
         type: Number,
         required: true
       },
-      buyPrice:{
+      buyPrice: {
         type: Number,
         required: true
       }
