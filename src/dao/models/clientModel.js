@@ -24,7 +24,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   address:{
-    steet:{
+    street:{
       type: String,
       required: true
     },
