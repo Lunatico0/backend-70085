@@ -24,12 +24,11 @@ const sellSchema = new mongoose.Schema({
     }
   ],
   client: {
-    name: { type: String, default: null },
-    lastName: { type: String, default: null }, // Corregido
-    email: { type: String, default: null },
-    address: { type: String, default: null }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'clients',
+    required: true
   },
-  date: { type: Date, default: Date.now } // Simplificado
+  date: { type: Date, default: Date.now }
 });
 
 sellSchema.plugin(mongoosePaginate);
