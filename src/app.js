@@ -37,25 +37,28 @@ const { sessionSecret } = configObject;
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
+      'http://localhost:8080',
+      'http://localhost:5173',
       'https://8dcz3969-5173.brs.devtunnels.ms',
       'https://artemisa-presupuesto.vercel.app',
-      'http://localhost:8080',
       'https://artemisanogoya.vercel.app',
       'https://backend-70085.vercel.app',
-      'https://artemisa-db.vercel.app',
       'https://backend-70085.onrender.com',
-      'https://artemisa-pvc.com',
-      'https://www.artemisa-pvc.com',
-      'http://localhost:5173',
+      'https://artemisa-db.vercel.app',
     ];
-    if (!origin || allowedOrigins.includes(origin)) {
+
+    // Permitir todos los subdominios de artemisa-pvc.com
+    const artemisaRegex = /^https?:\/\/([a-z0-9-]+\.)?artemisa-pvc\.com$/;
+
+    if (!origin || allowedOrigins.includes(origin) || artemisaRegex.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Origen no permitido por CORS'));
     }
   },
-  credentials: true
+  credentials: true,
 };
+
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
