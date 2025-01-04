@@ -59,7 +59,6 @@ const corsOptions = {
   credentials: true,
 };
 
-
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
@@ -78,7 +77,6 @@ app.use(
     },
   })
 );
-
 app.use(session({
   secret: sessionSecret,
   resave: false,

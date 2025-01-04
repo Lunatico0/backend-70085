@@ -8,13 +8,23 @@ const manager = new CartManager();
 class UserController {
   async newClient(req, res) {
     try {
-      const newClientData = req.body;
+      const { name, lastName } = req.body;
+      if (!name || !lastName) {
+        return res.status(400).json({ error: "Los campos 'name' y 'lastName' son obligatorios" });
+      }
+
+      const newClientData = {
+        ...req.body,
+        address: req.body.address || {},
+      };
+
       const newClient = await userServices.createClient(newClientData);
       res.status(201).json(newClient);
     } catch (error) {
       res.status(500).json({ error: 'Error al crear el cliente', details: error.message });
     }
   }
+
 
   async getClients(req, res) {
     try {
