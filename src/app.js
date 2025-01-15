@@ -107,6 +107,7 @@ app.use('/api/clients', clientsRouter);
 app.use('/contact', contactRouter);
 app.use('/api/sells', sellRouter);
 app.use('/', viewsRouter);
+app.use('/status', (req, res) => res.status(200).send('OK'));
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
