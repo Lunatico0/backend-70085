@@ -15,10 +15,12 @@ class ProductManager {
         return "El código del producto ya existe, el codigo deve ser unico";
       }
 
+      const priceWithIVA = parseFloat((price * 1.21));
+
       const newProduct = new ProductModel({
         title,
         description,
-        price,
+        price: priceWithIVA,
         code,
         stock,
         category,
