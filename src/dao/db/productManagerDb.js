@@ -38,7 +38,7 @@ class ProductManager {
     }
   };
 
-  async getProducts(page, limit, sort, category, subcategory) {
+  async getProducts(page, limit, sort, category, subcategory, subsubcategory) {
     const query = {};
 
     if (category && category !== "null") {
@@ -47,6 +47,10 @@ class ProductManager {
 
     if (subcategory && subcategory !== "null") {
       query["category.subcategoria.subcategoriaId"] = subcategory;
+    }
+
+    if (subsubcategory && subsubcategory !== "null") {
+      query["category.subcategoria.subsubcategoria.subsubcategoriaId"] = subsubcategory;
     }
 
     const options = {

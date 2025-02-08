@@ -48,7 +48,17 @@ const productSchema = new mongoose.Schema({
       subcategoriaNombre: {
         type: String,
         required: false
-      }
+      },
+      subsubcategoria:{
+        subsubcategoriaId: {
+          type: String,
+          required: false
+        },
+        subsubcategoriaNombre: {
+          type: String,
+          required: false
+        },
+      },
     }
   },
   thumbnails: {

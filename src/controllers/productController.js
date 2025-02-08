@@ -7,32 +7,22 @@ class productController {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 15;
     const querySort = req.query.sort || "defa";
-    const category = req.query.category || null; // Si no se pasa, será null
-    const subcategory = req.query.subcategory || null; // Si no se pasa, será null
+    const category = req.query.category || null;
+    const subcategory = req.query.subcategory || null;
+    const subsubcategory = req.query.subsubcategory || null;
     let sort = {};
 
     switch (querySort) {
-      case "price_asc":
-        sort = { price: 1 };
-        break;
-      case "price_desc":
-        sort = { price: -1 };
-        break;
-      case "alpha_asc":
-        sort = { title: 1 };
-        break;
-      case "alpha_desc":
-        sort = { title: -1 };
-        break;
-      case "defa":
-        sort = { createdAt: 1 };
-        break;
-      default:
-        break;
+      case "price_asc": sort = { price: 1 }; break;
+      case "price_desc": sort = { price: -1 }; break;
+      case "alpha_asc": sort = { title: 1 }; break;
+      case "alpha_desc": sort = { title: -1 }; break;
+      case "defa": sort = { createdAt: 1 }; break;
+      default: break;
     }
 
     try {
-      const { prodRender, productsList } = await manager.getProducts(page, limit, sort, category, subcategory);
+      const { prodRender, productsList } = await manager.getProducts(page, limit, sort, category, subcategory, subsubcategory);
 
       res.json({
         status: "success",
@@ -44,10 +34,10 @@ class productController {
         hasPrevPage: productsList.hasPrevPage,
         hasNextPage: productsList.hasNextPage,
         prevLink: productsList.hasPrevPage
-          ? `/api/products?page=${productsList.prevPage}&limit=${limit}&sort=${querySort}&category=${category}&subcategory=${subcategory}`
+          ? `/api/products?page=${productsList.prevPage}&limit=${limit}&sort=${querySort}&category=${category}&subcategory=${subcategory}&subsubcategory=${subsubcategory}`
           : null,
         nextLink: productsList.hasNextPage
-          ? `/api/products?page=${productsList.nextPage}&limit=${limit}&sort=${querySort}&category=${category}&subcategory=${subcategory}`
+          ? `/api/products?page=${productsList.nextPage}&limit=${limit}&sort=${querySort}&category=${category}&subcategory=${subcategory}&subsubcategory=${subsubcategory}`
           : null,
       });
     } catch (error) {
