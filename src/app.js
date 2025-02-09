@@ -39,7 +39,7 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:8080',
       'http://localhost:5173',
-      'https://8dcz3969-5173.brs.devtunnels.ms',
+      'https://2rrp47lk-5173.brs.devtunnels.ms/',
       'https://artemisa-presupuesto.vercel.app',
       'https://artemisanogoya.vercel.app',
       'https://backend-70085.vercel.app',
