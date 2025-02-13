@@ -5,57 +5,32 @@ class TicketController {
   async purchaseCart(req, res) {
     try {
       const cartId = req.params.cid;
-      const userEmail = req.user.email;
+      const userData = req.body.cliente;
 
-      const { ticket, unavailableProducts } = await TicketService.processPurchase(cartId, userEmail);
+      const ticket = await TicketService.processPurchase(cartId, userData);
 
-      if (unavailableProducts.length > 0) {
-        return res.status(400).render('error', {
-          title: 'Stock insuficiente',
-          message: 'Algunos productos no están disponibles en la cantidad solicitada',
-          description: 'Puedes volver al carrito para ajustar las cantidades o proceder con los disponibles.',
-          buttons: [
-            { text: 'Volver al carrito', href: '/cart', method: 'GET' },
-            { text: 'Comprar disponibles', href: `/api/carts/${ticket._id}/confirm-purchase`, method: 'POST' }
-          ]
-        });
-      };
-
+      // Actualizar el carrito eliminando productos comprados
       const cart = await cartRepository.getCartById(cartId);
 
-      cart.products = cart.products.filter(cartItem =>
-        !ticket.products.some(ticketItem => ticketItem.productId.equals(cartItem.product._id))
+      cart.products = cart.products.filter((cartItem) =>
+        !ticket.products.some((ticketItem) => ticketItem.productId.equals(cartItem.product._id))
       );
 
-      await cartRepository.updateCart(cart._id, cart);
+      await cartRepository.updateCart(cart._id, cart.products);
 
-      if (req.headers['accept'].includes('application/json')) {
-        return res.status(200).json({
-          message: 'Purchase completed',
-          ticket,
-          unavailableProducts
-        });
-      } else {
-        return res.redirect(`/purchase/${ticket._id}`);
-      };
+      return res.status(200).json({
+        success: true,
+        message: 'Compra realizada con éxito',
+        ticket,
+      });
+
     } catch (error) {
-      if (req.headers['accept'].includes('application/json')) {
-        return res.status(500).json({
-          message: 'Error en la compra',
-          error: error.message
-        });
-      } else {
-        return res.status(500).render('error', {
-          title: 'Compra fallida',
-          message: 'Hubo un error al procesar la compra',
-          description: error.message,
-          buttons: [
-            { text: 'Volver al carrito', href: `/cart` },
-            { text: 'Ir a inicio', href: '/' }
-          ]
-        });
-      };
-    };
+      return res.status(500).json({
+        success: false,
+        message: 'Error en la compra',
+        error: error.message,
+      });
+    }
   };
 
   async confirmPurchase(req, res) {
@@ -64,44 +39,59 @@ class TicketController {
       const ticket = await TicketService.getTicketById(ticketId);
       const cart = await cartRepository.getCartById(req.user.cart);
 
-      if (!ticket.products) {
-        throw new Error('El ticket no contiene productos');
-      }
-
-      if (!ticket) {
-        return res.status(404).render('error', {
-          title: 'Error de compra',
-          message: 'No se pudo encontrar el ticket de compra.',
-          buttons: [{ text: 'Volver al carrito', href: '/cart' }]
+      if (!ticket || !ticket.products) {
+        return res.status(404).json({
+          success: false,
+          message: 'No se pudo encontrar el ticket de compra o no tiene productos',
         });
       }
 
       if (!cart) {
-        return res.status(404).render('error', {
-          title: 'Error de carrito',
-          message: 'No se pudo encontrar el carrito del usuario.',
-          buttons: [{ text: 'Volver a la tienda', href: '/' }]
+        return res.status(404).json({
+          success: false,
+          message: 'No se pudo encontrar el carrito del usuario',
         });
       }
 
-      // Eliminar del carrito los productos que se compraron (que están en el ticket)
+      // Eliminar del carrito los productos que se compraron
       cart.products = cart.products.filter(cartItem =>
         !ticket.products.some(ticketItem => ticketItem.productId.equals(cartItem.product._id))
       );
+      await cartRepository.updateCart(cart._id, cart);
 
-      await cartRepository.updateCart(cart._id, cart);  // Actualizar el carrito sin los productos comprados
-
-      return res.redirect(`/purchase/${ticket._id}`)
+      return res.status(200).json({
+        success: true,
+        message: 'Compra confirmada con éxito',
+        ticket,
+      });
 
     } catch (error) {
-      return res.status(500).render('error', {
-        title: 'Error',
-        message: 'Hubo un problema al confirmar la compra.',
-        description: error.message,
-        buttons: [{ text: 'Volver al carrito', href: '/cart' }]
+      return res.status(500).json({
+        success: false,
+        message: 'Hubo un problema al confirmar la compra',
+        error: error.message,
       });
     }
   };
+
+  async getPurcaseDetails(req, res) {
+    try {
+      const purchaseId = req.params.purchaseId;
+      if (!purchaseId) {
+        return res.status(400).json({ success: false, message: "El ID de la compra es requerido" });
+      }
+
+      const ticket = await TicketService.getTicketById(purchaseId);
+      if (!ticket) {
+        return res.status(404).json({ success: false, message: "Ticket no encontrado" });
+      }
+
+      return res.status(200).json({ success: true, ticket });
+    } catch (error) {
+      return res.status(500).json({ success: false, message: "Error al obtener los detalles de la compra", error: error.message });
+    }
+  }
+
 }
 
 export default new TicketController();

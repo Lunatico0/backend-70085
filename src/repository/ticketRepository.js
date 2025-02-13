@@ -1,4 +1,5 @@
 import ticketDao from "../dao/ticketDao.js";
+import TicketModel from '../dao/models/ticket.model.js';
 
 class TicketRepository {
   async create(ticketData) {
@@ -6,7 +7,7 @@ class TicketRepository {
   }
 
   async findById(ticketId) {
-    return await ticketDao.getTicketById(ticketId);
+    return await TicketModel.findById(ticketId).populate('products.productId')
   }
 
   async update(ticketId, updateData) {

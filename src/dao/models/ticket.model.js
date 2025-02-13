@@ -8,8 +8,27 @@ const ticketSchema = new mongoose.Schema({
     default: () => uuidv4()
   },
   purchaser: {
-    type: String,
-    required: true
+    email: {
+      type: String,
+      required: true
+    },
+    nombre: {
+      type: String,
+      required: true
+    },
+    apellido: {
+      type: String,
+      required: true
+    },
+    telefono: {
+      type: String
+    },
+    direccion: {
+      type: String
+    },
+    localidad: {
+      type: String
+    }
   },
   products: [
     {
@@ -29,23 +48,27 @@ const ticketSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0
+
   },
   status: {
     type: String,
     enum: ['pending', 'completed', 'canceled'],
     default: 'pending'
+
   },
   purchase_datetime: {
     type: Date,
-    default: Date.now  // Guarda la fecha y hora exacta de la compra
+    default: Date.now
+
   },
   updatedAt: {
     type: Date,
     default: Date.now
+
   }
 });
 
-ticketSchema.pre('save', function(next) {
+ticketSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

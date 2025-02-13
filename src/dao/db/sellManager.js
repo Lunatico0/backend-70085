@@ -15,8 +15,6 @@ class VentasManager {
       const ventas = await SellsModel.find()
         .populate('products', 'products')
         .populate('client', 'clients');
-
-      console.log(ventas)
       return ventas
     } catch (error) {
       throw new Error('Error al obtener las ventas: ' + error.message);

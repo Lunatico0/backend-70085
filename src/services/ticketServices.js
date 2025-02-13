@@ -3,57 +3,58 @@ import CartRepository from '../repository/cartRepository.js'
 import { v4 as uuidv4 } from 'uuid';
 
 class TicketService {
-  async processPurchase(cartId, userEmail) {
+  async processPurchase(cartId, userData) {
     const cart = await CartRepository.getCartById(cartId);
-    if (!cart) {
-      throw new Error('Cart not found');
-    }
+    if (!cart) throw new Error('Carrito no encontrado');
 
     let totalAmount = 0;
-    const unavailableProducts = [];
     const purchasedProducts = [];
 
     for (const item of cart.products) {
       const product = item.product;
+      if (!product || product.stock < item.quantity) continue;
 
-      if (!product) {
-        unavailableProducts.push({ productId: item.product, message: 'Product not found' });
-        continue;
-      }
-
-      if (product.stock >= item.quantity) {
-        product.stock -= item.quantity;
-        totalAmount += product.price * item.quantity;
-        purchasedProducts.push({ productId: product._id, quantity: item.quantity });
-        await product.save();
-      } else {
-        unavailableProducts.push({
-          productId: product._id,
-          title: product.title,
-          availableQuantity: product.stock,
-          requestedQuantity: item.quantity
-        });
-      }
+      product.stock -= item.quantity;
+      totalAmount += product.price * item.quantity;
+      purchasedProducts.push({ productId: product._id, quantity: item.quantity });
+      await product.save();
     }
 
-    if (purchasedProducts.length > 0) {
-      const ticketData = {
-        code: uuidv4(),
-        purchaser: userEmail,
-        products: purchasedProducts,
-        amount: totalAmount,
-        status: 'completed'
-      };
-      const ticket = await TicketRepository.create(ticketData);
+    if (purchasedProducts.length === 0) throw new Error('No hay productos disponibles para la compra');
 
-      return { ticket, unavailableProducts };
-    } else {
-      throw new Error('No products available for purchase');
+    // 🔥 Verifica que userData tenga los datos necesarios
+    if (!userData.email || !userData.nombre) {
+      throw new Error('Faltan datos del comprador');
+    }
+
+    const ticketData = {
+      code: uuidv4(),
+      purchaser: {
+        email: userData.email,
+        nombre: userData.nombre,
+        apellido: userData.apellido,
+        telefono: userData.telefono || "",
+        direccion: userData.direccion || "",
+        localidad: userData.localidad || ""
+      },
+      products: purchasedProducts,
+      amount: totalAmount,
+      status: 'completed'
     };
-  };
+
+
+    const res = await TicketRepository.create(ticketData);
+    return res
+  }
 
   async getTicketById(ticketId) {
-    return await TicketRepository.findById(ticketId);
+    const ticket = await TicketRepository.findById(ticketId);
+
+    if (!ticket) {
+      throw new Error("No se encontró el ticket.");
+    }
+
+    return ticket;
   }
 }
 

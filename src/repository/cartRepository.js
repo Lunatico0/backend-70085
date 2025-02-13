@@ -6,7 +6,8 @@ class cartRepository{
   };
 
   async getCartById(id){
-    return await cartDao.findById(id);
+    const cart = await cartDao.findById(id);
+    return cart
   };
 
   async updateCart(id, products){
