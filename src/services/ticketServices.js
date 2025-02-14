@@ -35,7 +35,8 @@ class TicketService {
         apellido: userData.apellido,
         telefono: userData.telefono || "",
         direccion: userData.direccion || "",
-        localidad: userData.localidad || ""
+        localidad: userData.localidad || "",
+        comentarios: userData.comentarios || ""
       },
       products: purchasedProducts,
       amount: totalAmount,

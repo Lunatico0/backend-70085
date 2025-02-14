@@ -28,6 +28,9 @@ const ticketSchema = new mongoose.Schema({
     },
     localidad: {
       type: String
+    },
+    comentarios: {
+      type: String
     }
   },
   products: [
