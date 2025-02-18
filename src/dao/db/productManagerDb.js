@@ -38,17 +38,24 @@ class ProductManager {
     }
   };
 
-  async getProducts(page, limit, sort, category, subcategory, subsubcategory) {
+  async getProducts(page, limit, sort, category, subcategory, subsubcategory, search = "") {
     const query = {};
 
+    // Agregar filtro de búsqueda
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { "description.value": { $regex: search, $options: "i" } }, // Buscamos en description.value
+      ];
+    }
+
+    // Filtrar por categoría
     if (category && category !== "null") {
       query["category.categoriaId"] = category;
     }
-
     if (subcategory && subcategory !== "null") {
       query["category.subcategoria.subcategoriaId"] = subcategory;
     }
-
     if (subsubcategory && subsubcategory !== "null") {
       query["category.subcategoria.subsubcategoria.subsubcategoriaId"] = subsubcategory;
     }
@@ -56,11 +63,13 @@ class ProductManager {
     const options = {
       page,
       limit,
-      sort,
+      sort, // Mongoose Paginate permite un objeto sort aquí
+      lean: true, // Devuelve objetos JSON limpios en lugar de documentos Mongoose
     };
 
     try {
       const productsList = await ProductModel.paginate(query, options);
+
       return {
         prodRender: productsList.docs,
         productsList,
@@ -70,6 +79,7 @@ class ProductManager {
       throw new Error("Failed to fetch products");
     }
   }
+
 
   async updateProduct(id, data) {
     try {

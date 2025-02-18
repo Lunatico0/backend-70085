@@ -4,7 +4,8 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   description: [
     {
@@ -71,6 +72,7 @@ const productSchema = new mongoose.Schema({
 });
 
 productSchema.plugin(mongoosePaginate);
+productSchema.index({ "description.value": "text" });
 
 const ProductModel = mongoose.models.products || mongoose.model('products', productSchema);
 
