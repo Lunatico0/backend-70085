@@ -80,17 +80,23 @@ class ProductManager {
     }
   }
 
-
   async updateProduct(id, data) {
     try {
-      const updated = await ProductModel.findByIdAndUpdate(id, data, { new: true });
-      if (!updated) {
+      const existingProduct = await ProductModel.findById(id);
+      if (!existingProduct) {
         console.log("No se encontró el producto");
         return "No se encontró el producto";
       }
+  
+      data.price = parseFloat(data.price * 1.21).toFixed(2);
+  
+      const updated = await ProductModel.findByIdAndUpdate(id, data, { new: true });
+  
+      console.log(`Producto actualizado correctamente. Nuevo precio con IVA: ${data.price}`);
       return updated;
     } catch (error) {
-      console.error(error);
+      console.error("Error al actualizar producto:", error);
+      throw error;
     }
   };
 
